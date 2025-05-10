@@ -58,7 +58,7 @@
             lastnameTB.Name = "lastnameTB";
             lastnameTB.PlaceholderText = "Фамилия";
             lastnameTB.Size = new Size(250, 31);
-            lastnameTB.TabIndex = 5;
+            lastnameTB.TabIndex = 2;
             // 
             // firstnameTB
             // 
@@ -66,16 +66,17 @@
             firstnameTB.Name = "firstnameTB";
             firstnameTB.PlaceholderText = "Имя";
             firstnameTB.Size = new Size(250, 31);
-            firstnameTB.TabIndex = 4;
+            firstnameTB.TabIndex = 1;
             // 
             // buttonConfirm
             // 
             buttonConfirm.Location = new Point(49, 233);
             buttonConfirm.Name = "buttonConfirm";
             buttonConfirm.Size = new Size(250, 34);
-            buttonConfirm.TabIndex = 3;
+            buttonConfirm.TabIndex = 5;
             buttonConfirm.Text = "Подтвердить";
             buttonConfirm.UseVisualStyleBackColor = true;
+            buttonConfirm.Click += buttonConfirm_Click;
             // 
             // passwordTB
             // 
@@ -83,7 +84,7 @@
             passwordTB.Name = "passwordTB";
             passwordTB.PlaceholderText = "Пароль";
             passwordTB.Size = new Size(250, 31);
-            passwordTB.TabIndex = 2;
+            passwordTB.TabIndex = 4;
             // 
             // labelRegistration
             // 
@@ -103,7 +104,8 @@
             phoneNumberTB.Name = "phoneNumberTB";
             phoneNumberTB.PlaceholderText = "Номер телефона";
             phoneNumberTB.Size = new Size(250, 31);
-            phoneNumberTB.TabIndex = 1;
+            phoneNumberTB.TabIndex = 3;
+            phoneNumberTB.Click += PhoneNumberTB_Click;
             // 
             // FormRegistration
             // 

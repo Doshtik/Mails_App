@@ -30,12 +30,12 @@
         {
             labelAutorization = new Label();
             phoneNumberTB = new TextBox();
-            panel1 = new Panel();
             buttonConfirm = new Button();
             passwordTB = new TextBox();
             linkRegistration = new LinkLabel();
             labelNoAccount = new Label();
-            panel1.SuspendLayout();
+            panelAuthorization = new Panel();
+            panelAuthorization.SuspendLayout();
             SuspendLayout();
             // 
             // labelAutorization
@@ -58,18 +58,6 @@
             phoneNumberTB.Size = new Size(250, 31);
             phoneNumberTB.TabIndex = 1;
             // 
-            // panel1
-            // 
-            panel1.BackColor = Color.White;
-            panel1.Controls.Add(buttonConfirm);
-            panel1.Controls.Add(passwordTB);
-            panel1.Controls.Add(labelAutorization);
-            panel1.Controls.Add(phoneNumberTB);
-            panel1.Location = new Point(408, 206);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(350, 221);
-            panel1.TabIndex = 2;
-            // 
             // buttonConfirm
             // 
             buttonConfirm.Location = new Point(49, 155);
@@ -78,6 +66,7 @@
             buttonConfirm.TabIndex = 3;
             buttonConfirm.Text = "Подтвердить";
             buttonConfirm.UseVisualStyleBackColor = true;
+            buttonConfirm.Click += buttonConfirm_Click;
             // 
             // passwordTB
             // 
@@ -107,6 +96,18 @@
             labelNoAccount.TabIndex = 4;
             labelNoAccount.Text = "Нет аккаунта?";
             // 
+            // panelAuthorization
+            // 
+            panelAuthorization.BackColor = Color.White;
+            panelAuthorization.Controls.Add(buttonConfirm);
+            panelAuthorization.Controls.Add(passwordTB);
+            panelAuthorization.Controls.Add(labelAutorization);
+            panelAuthorization.Controls.Add(phoneNumberTB);
+            panelAuthorization.Location = new Point(408, 206);
+            panelAuthorization.Name = "panelAuthorization";
+            panelAuthorization.Size = new Size(350, 221);
+            panelAuthorization.TabIndex = 2;
+            // 
             // FormAuthorization
             // 
             AutoScaleDimensions = new SizeF(10F, 23F);
@@ -114,14 +115,14 @@
             ClientSize = new Size(1142, 690);
             Controls.Add(labelNoAccount);
             Controls.Add(linkRegistration);
-            Controls.Add(panel1);
+            Controls.Add(panelAuthorization);
             Font = new Font("Calibri", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
             Margin = new Padding(4, 5, 4, 5);
             Name = "FormAuthorization";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "MailsApp | Авторизация";
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
+            panelAuthorization.ResumeLayout(false);
+            panelAuthorization.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -130,10 +131,10 @@
 
         private Label labelAutorization;
         private TextBox phoneNumberTB;
-        private Panel panel1;
         private Button buttonConfirm;
         private TextBox passwordTB;
         private LinkLabel linkRegistration;
         private Label labelNoAccount;
+        private Panel panelAuthorization;
     }
 }
