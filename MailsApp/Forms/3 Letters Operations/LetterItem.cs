@@ -17,13 +17,13 @@ namespace MailsApp.Forms._3_Letters_Operations
         {
             InitializeComponent();
             Id = id;
-            radioButtonFavorite.Checked = isFavorite;
+            checkBoxFavorite.Checked = isFavorite;
             labelTheme.Text = theme;
             labelMessage.Text = message;
             labelTime.Text = time.ToString();
         }
 
-        public void LetterItem_SizeChanged(object sender, EventArgs e)
+        /*public void LetterItem_SizeChanged(object sender, EventArgs e)
         {
             if (this.Width <= 500)
             {
@@ -31,9 +31,9 @@ namespace MailsApp.Forms._3_Letters_Operations
             }
             else
             {
-                labelMessage.Width = this.Width - checkBoxSelected.Width - radioButtonFavorite.Width - labelTheme.Width - labelTime.Width;
+                labelMessage.Width = this.Width - checkBoxSelected.Width - checkBoxFavorite.Width - labelTheme.Width - labelTime.Width;
             }
-        }
+        }*/
 
         private void LabelTheme_Click(object sender, EventArgs e)
         {

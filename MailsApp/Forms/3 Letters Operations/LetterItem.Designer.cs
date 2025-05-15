@@ -32,9 +32,9 @@ namespace MailsApp.Forms._3_Letters_Operations
         {
             checkBoxSelected = new CheckBox();
             labelTheme = new Label();
-            radioButtonFavorite = new RadioButton();
             labelMessage = new Label();
             labelTime = new Label();
+            checkBoxFavorite = new CheckBox();
             SuspendLayout();
             // 
             // checkBoxSelected
@@ -57,22 +57,11 @@ namespace MailsApp.Forms._3_Letters_Operations
             labelTheme.TextAlign = ContentAlignment.MiddleLeft;
             labelTheme.Click += LabelTheme_Click;
             // 
-            // radioButtonFavorite
-            // 
-            radioButtonFavorite.CheckAlign = ContentAlignment.MiddleCenter;
-            radioButtonFavorite.Location = new Point(44, 4);
-            radioButtonFavorite.Name = "radioButtonFavorite";
-            radioButtonFavorite.Size = new Size(29, 30);
-            radioButtonFavorite.TabIndex = 3;
-            radioButtonFavorite.TabStop = true;
-            radioButtonFavorite.TextAlign = ContentAlignment.TopCenter;
-            radioButtonFavorite.UseVisualStyleBackColor = true;
-            // 
             // labelMessage
             // 
             labelMessage.Location = new Point(211, 4);
             labelMessage.Name = "labelMessage";
-            labelMessage.Size = new Size(351, 30);
+            labelMessage.Size = new Size(282, 30);
             labelMessage.TabIndex = 4;
             labelMessage.Text = "Содержимое сообщения";
             labelMessage.TextAlign = ContentAlignment.MiddleLeft;
@@ -80,25 +69,35 @@ namespace MailsApp.Forms._3_Letters_Operations
             // 
             // labelTime
             // 
-            labelTime.Location = new Point(568, 4);
+            labelTime.Location = new Point(499, 4);
             labelTime.Name = "labelTime";
-            labelTime.Size = new Size(60, 30);
+            labelTime.Size = new Size(73, 30);
             labelTime.TabIndex = 5;
             labelTime.Text = "13 апр.";
             labelTime.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // checkBoxFavorite
+            // 
+            checkBoxFavorite.CheckAlign = ContentAlignment.MiddleCenter;
+            checkBoxFavorite.Location = new Point(39, 4);
+            checkBoxFavorite.Name = "checkBoxFavorite";
+            checkBoxFavorite.Size = new Size(34, 30);
+            checkBoxFavorite.TabIndex = 6;
+            checkBoxFavorite.UseVisualStyleBackColor = true;
             // 
             // LetterItem
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoValidate = AutoValidate.Disable;
+            BackColor = Color.Silver;
+            Controls.Add(checkBoxFavorite);
             Controls.Add(labelTime);
             Controls.Add(labelMessage);
-            Controls.Add(radioButtonFavorite);
             Controls.Add(labelTheme);
             Controls.Add(checkBoxSelected);
             Name = "LetterItem";
-            Size = new Size(628, 40);
-            SizeChanged += LetterItem_SizeChanged;
+            Size = new Size(578, 40);
             ResumeLayout(false);
         }
 
@@ -106,8 +105,8 @@ namespace MailsApp.Forms._3_Letters_Operations
 
         private CheckBox checkBoxSelected;
         private Label labelTheme;
-        private RadioButton radioButtonFavorite;
         private Label labelMessage;
         private Label labelTime;
+        private CheckBox checkBoxFavorite;
     }
 }
