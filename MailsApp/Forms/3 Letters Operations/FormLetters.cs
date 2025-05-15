@@ -53,7 +53,7 @@ namespace MailsApp.Forms
                 else
                     theme = "Без темы";
 
-                LetterItem item = new LetterItem(letter.IsFavorite, theme, letter.Message, letter.Date)
+                LetterItem item = new LetterItem(letter.Id, letter.IsFavorite, theme, letter.Message, letter.Date)
                 {
                     Location = Location = new Point(10, 10 + itemCount),
                     Width = panelMessages.Width - 20

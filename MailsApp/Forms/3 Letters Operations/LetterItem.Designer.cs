@@ -55,6 +55,7 @@ namespace MailsApp.Forms._3_Letters_Operations
             labelTheme.TabIndex = 1;
             labelTheme.Text = "Тема сообщения";
             labelTheme.TextAlign = ContentAlignment.MiddleLeft;
+            labelTheme.Click += LabelTheme_Click;
             // 
             // radioButtonFavorite
             // 
@@ -75,6 +76,7 @@ namespace MailsApp.Forms._3_Letters_Operations
             labelMessage.TabIndex = 4;
             labelMessage.Text = "Содержимое сообщения";
             labelMessage.TextAlign = ContentAlignment.MiddleLeft;
+            labelMessage.Click += LabelMessage_Click;
             // 
             // labelTime
             // 

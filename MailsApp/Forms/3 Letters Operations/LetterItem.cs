@@ -12,9 +12,11 @@ namespace MailsApp.Forms._3_Letters_Operations
 {
     public partial class LetterItem : UserControl
     {
-        public LetterItem(bool isFavorite, string theme, string message, DateTime time)
+        public int Id { get; private set; }
+        public LetterItem(int id, bool isFavorite, string theme, string message, DateTime time)
         {
             InitializeComponent();
+            Id = id;
             radioButtonFavorite.Checked = isFavorite;
             labelTheme.Text = theme;
             labelMessage.Text = message;
@@ -31,6 +33,18 @@ namespace MailsApp.Forms._3_Letters_Operations
             {
                 labelMessage.Width = this.Width - checkBoxSelected.Width - radioButtonFavorite.Width - labelTheme.Width - labelTime.Width;
             }
+        }
+
+        private void LabelTheme_Click(object sender, EventArgs e)
+        {
+            FormReadLetter form = new FormReadLetter(id);
+            form.ShowDialog();
+        }
+
+        private void LabelMessage_Click(object sender, EventArgs e)
+        {
+            FormReadLetter form = new FormReadLetter(id);
+            form.ShowDialog();
         }
     }
 }
