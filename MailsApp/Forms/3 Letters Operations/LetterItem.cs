@@ -37,13 +37,13 @@ namespace MailsApp.Forms._3_Letters_Operations
 
         private void LabelTheme_Click(object sender, EventArgs e)
         {
-            FormReadLetter form = new FormReadLetter(id);
+            FormReadLetter form = new FormReadLetter(Id);
             form.ShowDialog();
         }
 
         private void LabelMessage_Click(object sender, EventArgs e)
         {
-            FormReadLetter form = new FormReadLetter(id);
+            FormReadLetter form = new FormReadLetter(Id);
             form.ShowDialog();
         }
     }
