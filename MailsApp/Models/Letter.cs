@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace MailsApp.Models;
 
+/// <summary>
+/// id_copy_recipient - нужно для того, чтобы у пользователя была независимая копия письма, которую тот может добавлять в избранное или удалять.
+/// </summary>
 public partial class Letter
 {
     public int Id { get; set; }
@@ -23,7 +26,15 @@ public partial class Letter
 
     public int? IdLetter { get; set; }
 
+    public int? IdLabel { get; set; }
+
+    public int IdCopyRecipient { get; set; }
+
+    public bool IsRead { get; set; }
+
     public virtual ICollection<Attachment> Attachments { get; set; } = new List<Attachment>();
+
+    public virtual MailLabel? IdLabelNavigation { get; set; }
 
     public virtual Letter? IdLetterNavigation { get; set; }
 

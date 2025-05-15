@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using MailsApp.Models;
 
-namespace MailsApp.Models;
+namespace MailsApp;
 
-public partial class AppContext : DbContext
+public partial class MailsAppContext : DbContext
 {
-    public AppContext() { }
+    public MailsAppContext() { }
 
-    public AppContext(DbContextOptions<AppContext> options) : base(options) { }
+    public MailsAppContext(DbContextOptions<MailsAppContext> options) : base(options) { }
 
     public virtual DbSet<Attachment> Attachments { get; set; }
 
     public virtual DbSet<Letter> Letters { get; set; }
+
+    public virtual DbSet<MailLabel> MailLabels { get; set; }
 
     public virtual DbSet<Mailbox> Mailboxes { get; set; }
 
@@ -22,7 +25,9 @@ public partial class AppContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) => optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=mails_app;Username=postgres;Password=1111");
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=mails_app;Username=postgres;Password=1111");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -48,12 +53,14 @@ public partial class AppContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("mails_pkey");
 
-            entity.ToTable("letters");
+            entity.ToTable("letters", tb => tb.HasComment("id_copy_recipient - нужно для того, чтобы у пользователя была независимая копия письма, которую тот может добавлять в избранное или удалять."));
 
             entity.Property(e => e.Id)
                 .HasDefaultValueSql("nextval('mails_id_seq'::regclass)")
                 .HasColumnName("id");
             entity.Property(e => e.Date).HasColumnName("date");
+            entity.Property(e => e.IdCopyRecipient).HasColumnName("id_copy_recipient");
+            entity.Property(e => e.IdLabel).HasColumnName("id_label");
             entity.Property(e => e.IdLetter).HasColumnName("id_letter");
             entity.Property(e => e.IdMailboxRecipient).HasColumnName("id_mailbox_recipient");
             entity.Property(e => e.IdMailboxSender).HasColumnName("id_mailbox_sender");
@@ -61,8 +68,15 @@ public partial class AppContext : DbContext
             entity.Property(e => e.IsFavorite)
                 .HasDefaultValue(false)
                 .HasColumnName("is_favorite");
+            entity.Property(e => e.IsRead)
+                .HasDefaultValue(false)
+                .HasColumnName("is_read");
             entity.Property(e => e.Message).HasColumnName("message");
             entity.Property(e => e.Theme).HasColumnName("theme");
+
+            entity.HasOne(d => d.IdLabelNavigation).WithMany(p => p.Letters)
+                .HasForeignKey(d => d.IdLabel)
+                .HasConstraintName("fk_letters_labels");
 
             entity.HasOne(d => d.IdLetterNavigation).WithMany(p => p.InverseIdLetterNavigation)
                 .HasForeignKey(d => d.IdLetter)
@@ -82,6 +96,18 @@ public partial class AppContext : DbContext
                 .HasForeignKey(d => d.IdStatus)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("fk_letters_statuses");
+        });
+
+        modelBuilder.Entity<MailLabel>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("labels_pkey");
+
+            entity.ToTable("mail_labels");
+
+            entity.Property(e => e.Id)
+                .HasDefaultValueSql("nextval('labels_id_seq'::regclass)")
+                .HasColumnName("id");
+            entity.Property(e => e.LabelName).HasColumnName("label_name");
         });
 
         modelBuilder.Entity<Mailbox>(entity =>
@@ -129,6 +155,8 @@ public partial class AppContext : DbContext
             entity.HasKey(e => e.Id).HasName("users_pkey");
 
             entity.ToTable("users");
+
+            entity.HasIndex(e => e.PhoneNumber, "users_phone_number_key").IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Firstname).HasColumnName("firstname");

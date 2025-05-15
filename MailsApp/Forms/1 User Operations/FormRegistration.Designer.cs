@@ -1,4 +1,6 @@
-﻿namespace MailsApp.Forms
+﻿using MailsApp.Models;
+
+namespace MailsApp.Forms
 {
     partial class FormRegistration
     {
@@ -47,14 +49,14 @@
             panel1.Controls.Add(passwordTB);
             panel1.Controls.Add(labelRegistration);
             panel1.Controls.Add(phoneNumberTB);
-            panel1.Location = new Point(401, 193);
+            panel1.Location = new Point(396, 193);
             panel1.Name = "panel1";
-            panel1.Size = new Size(349, 292);
+            panel1.Size = new Size(378, 292);
             panel1.TabIndex = 3;
             // 
             // lastnameTB
             // 
-            lastnameTB.Location = new Point(49, 122);
+            lastnameTB.Location = new Point(66, 122);
             lastnameTB.Name = "lastnameTB";
             lastnameTB.PlaceholderText = "Фамилия";
             lastnameTB.Size = new Size(250, 31);
@@ -62,7 +64,7 @@
             // 
             // firstnameTB
             // 
-            firstnameTB.Location = new Point(49, 85);
+            firstnameTB.Location = new Point(66, 85);
             firstnameTB.Name = "firstnameTB";
             firstnameTB.PlaceholderText = "Имя";
             firstnameTB.Size = new Size(250, 31);
@@ -70,7 +72,7 @@
             // 
             // buttonConfirm
             // 
-            buttonConfirm.Location = new Point(49, 233);
+            buttonConfirm.Location = new Point(66, 233);
             buttonConfirm.Name = "buttonConfirm";
             buttonConfirm.Size = new Size(250, 34);
             buttonConfirm.TabIndex = 5;
@@ -80,7 +82,7 @@
             // 
             // passwordTB
             // 
-            passwordTB.Location = new Point(49, 196);
+            passwordTB.Location = new Point(66, 196);
             passwordTB.Name = "passwordTB";
             passwordTB.PlaceholderText = "Пароль";
             passwordTB.Size = new Size(250, 31);
@@ -90,7 +92,7 @@
             // 
             labelRegistration.AutoSize = true;
             labelRegistration.Font = new Font("Calibri", 21.75F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            labelRegistration.Location = new Point(87, 46);
+            labelRegistration.Location = new Point(104, 46);
             labelRegistration.Margin = new Padding(4, 0, 4, 0);
             labelRegistration.Name = "labelRegistration";
             labelRegistration.Size = new Size(170, 36);
@@ -100,7 +102,7 @@
             // 
             // phoneNumberTB
             // 
-            phoneNumberTB.Location = new Point(49, 159);
+            phoneNumberTB.Location = new Point(66, 159);
             phoneNumberTB.Name = "phoneNumberTB";
             phoneNumberTB.PlaceholderText = "Номер телефона";
             phoneNumberTB.Size = new Size(250, 31);

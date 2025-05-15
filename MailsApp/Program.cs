@@ -1,4 +1,6 @@
 using MailsApp.Forms;
+using MailsApp.Models;
+
 
 namespace MailsApp
 {

@@ -1,4 +1,6 @@
-﻿namespace MailsApp.Forms
+﻿using MailsApp.Models;
+
+namespace MailsApp.Forms
 {
     partial class FormAuthorization
     {
@@ -35,6 +37,7 @@
             linkRegistration = new LinkLabel();
             labelNoAccount = new Label();
             panelAuthorization = new Panel();
+            panelUserItems = new Panel();
             panelAuthorization.SuspendLayout();
             SuspendLayout();
             // 
@@ -103,16 +106,24 @@
             panelAuthorization.Controls.Add(passwordTB);
             panelAuthorization.Controls.Add(labelAutorization);
             panelAuthorization.Controls.Add(phoneNumberTB);
-            panelAuthorization.Location = new Point(408, 206);
+            panelAuthorization.Location = new Point(394, 206);
             panelAuthorization.Name = "panelAuthorization";
-            panelAuthorization.Size = new Size(350, 221);
+            panelAuthorization.Size = new Size(378, 221);
             panelAuthorization.TabIndex = 2;
+            // 
+            // panelUserItems
+            // 
+            panelUserItems.Location = new Point(394, 84);
+            panelUserItems.Name = "panelUserItems";
+            panelUserItems.Size = new Size(378, 116);
+            panelUserItems.TabIndex = 5;
             // 
             // FormAuthorization
             // 
             AutoScaleDimensions = new SizeF(10F, 23F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1142, 690);
+            Controls.Add(panelUserItems);
             Controls.Add(labelNoAccount);
             Controls.Add(linkRegistration);
             Controls.Add(panelAuthorization);
@@ -136,5 +147,6 @@
         private LinkLabel linkRegistration;
         private Label labelNoAccount;
         private Panel panelAuthorization;
+        private Panel panelUserItems;
     }
 }

@@ -27,7 +27,7 @@ namespace MailsApp.Forms
             }
             else
             {
-                using (Models.AppContext db = new Models.AppContext())
+                using (MailsAppContext db = new MailsAppContext())
                 {
                     User? user = db.Users
                             .Where(u => u.PhoneNumber.Equals(phoneNumber))
