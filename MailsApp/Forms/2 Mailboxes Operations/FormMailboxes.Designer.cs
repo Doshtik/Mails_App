@@ -73,20 +73,21 @@
             panelItems.Location = new Point(0, 49);
             panelItems.Name = "panelItems";
             panelItems.Padding = new Padding(10);
-            panelItems.Size = new Size(549, 401);
+            panelItems.Size = new Size(549, 402);
             panelItems.TabIndex = 1;
             // 
             // FormMailboxes
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(549, 450);
+            ClientSize = new Size(549, 451);
             Controls.Add(panelItems);
             Controls.Add(panelActions);
+            MinimumSize = new Size(565, 300);
             Name = "FormMailboxes";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "MailsApp | Почтовые ящики";
-            SizeChanged += FormMain_SizeChanged;
+            SizeChanged += FormMailboxes_SizeChanged;
             panelActions.ResumeLayout(false);
             ResumeLayout(false);
         }

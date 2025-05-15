@@ -1,6 +1,6 @@
-﻿namespace MailsApp.Forms
+﻿namespace MailsApp.Forms._1_User_Operations
 {
-    partial class FormMakeMailbox
+    partial class FormUserSettings
     {
         /// <summary>
         /// Required designer variable.
@@ -28,17 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            SuspendLayout();
-            // 
-            // FormMakeMailbox
-            // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Name = "FormMakeMailbox";
-            StartPosition = FormStartPosition.CenterScreen;
-            Text = "FormMakeMailbox";
-            ResumeLayout(false);
+            this.components = new System.ComponentModel.Container();
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Text = "FormUserSettings";
         }
 
         #endregion

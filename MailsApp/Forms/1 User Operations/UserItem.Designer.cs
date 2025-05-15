@@ -46,6 +46,7 @@ namespace MailsApp.Forms
             panelAction.Controls.Add(buttonEntrance);
             panelAction.Dock = DockStyle.Fill;
             panelAction.Location = new Point(0, 72);
+            panelAction.Margin = new Padding(0);
             panelAction.Name = "panelAction";
             panelAction.Padding = new Padding(5);
             panelAction.Size = new Size(378, 44);
@@ -81,6 +82,7 @@ namespace MailsApp.Forms
             panelInfo.Controls.Add(labelFirstname);
             panelInfo.Dock = DockStyle.Top;
             panelInfo.Location = new Point(0, 0);
+            panelInfo.Margin = new Padding(0);
             panelInfo.Name = "panelInfo";
             panelInfo.Padding = new Padding(5);
             panelInfo.Size = new Size(378, 72);
@@ -90,23 +92,25 @@ namespace MailsApp.Forms
             // 
             labelLastname.AutoSize = true;
             labelLastname.Font = new Font("Arial", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            labelLastname.Location = new Point(14, 41);
+            labelLastname.Location = new Point(10, 41);
             labelLastname.Margin = new Padding(0);
             labelLastname.Name = "labelLastname";
             labelLastname.Size = new Size(87, 22);
             labelLastname.TabIndex = 1;
             labelLastname.Text = "Фамилия";
+            labelLastname.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // labelFirstname
             // 
             labelFirstname.AutoSize = true;
             labelFirstname.Font = new Font("Arial", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            labelFirstname.Location = new Point(14, 14);
+            labelFirstname.Location = new Point(10, 14);
             labelFirstname.Margin = new Padding(5);
             labelFirstname.Name = "labelFirstname";
             labelFirstname.Size = new Size(47, 22);
             labelFirstname.TabIndex = 0;
             labelFirstname.Text = "Имя";
+            labelFirstname.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // UserItem
             // 

@@ -44,6 +44,7 @@ namespace MailsApp.Forms
                         userItem.OnEntrancePressed += (sender, e) => NextTo();
                         userItem.OnClearPressed += (sender, e) => ClearPanel();
                         panelUserItems.Controls.Add(userItem);
+                        panelUserItems.Visible = true;
                     }
                 }
             }
@@ -92,6 +93,7 @@ namespace MailsApp.Forms
             Program.SetValueToConfigFile<string>("phone_number", "");
             Program.SetValueToConfigFile<string>("password", "");
             panelUserItems.Controls.Clear();
+            panelUserItems.Visible = false;
         }
 
 

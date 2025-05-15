@@ -30,7 +30,16 @@ namespace MailsApp.Forms
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             panelTop = new Panel();
+            buttonSearch = new Button();
+            panelUser = new Panel();
+            contextMenuStrip1 = new ContextMenuStrip(components);
+            настройкиУчетнойЗаписиToolStripMenuItem = new ToolStripMenuItem();
+            сменитьПочтовыйЯщикToolStripMenuItem = new ToolStripMenuItem();
+            выйтиИзАккаунтаToolStripMenuItem = new ToolStripMenuItem();
+            labelUser = new Label();
+            textBoxSearch = new TextBox();
             panelSidebar = new Panel();
             labelGarbage = new Label();
             labelDraft = new Label();
@@ -42,6 +51,9 @@ namespace MailsApp.Forms
             panelActions = new Panel();
             panelLabels = new Panel();
             panelMessages = new Panel();
+            panelTop.SuspendLayout();
+            panelUser.SuspendLayout();
+            contextMenuStrip1.SuspendLayout();
             panelSidebar.SuspendLayout();
             SuspendLayout();
             // 
@@ -49,11 +61,81 @@ namespace MailsApp.Forms
             // 
             panelTop.BackColor = Color.White;
             panelTop.BorderStyle = BorderStyle.FixedSingle;
+            panelTop.Controls.Add(buttonSearch);
+            panelTop.Controls.Add(panelUser);
+            panelTop.Controls.Add(textBoxSearch);
             panelTop.Dock = DockStyle.Top;
             panelTop.Location = new Point(0, 0);
             panelTop.Name = "panelTop";
+            panelTop.Padding = new Padding(15);
             panelTop.Size = new Size(800, 60);
             panelTop.TabIndex = 0;
+            // 
+            // buttonSearch
+            // 
+            buttonSearch.Location = new Point(458, 15);
+            buttonSearch.Margin = new Padding(0, 15, 15, 15);
+            buttonSearch.Name = "buttonSearch";
+            buttonSearch.Size = new Size(93, 28);
+            buttonSearch.TabIndex = 2;
+            buttonSearch.Text = "Поиск";
+            buttonSearch.UseVisualStyleBackColor = true;
+            // 
+            // panelUser
+            // 
+            panelUser.BackColor = SystemColors.Control;
+            panelUser.BorderStyle = BorderStyle.FixedSingle;
+            panelUser.ContextMenuStrip = contextMenuStrip1;
+            panelUser.Controls.Add(labelUser);
+            panelUser.Location = new Point(569, 15);
+            panelUser.Name = "panelUser";
+            panelUser.Size = new Size(211, 28);
+            panelUser.TabIndex = 1;
+            // 
+            // contextMenuStrip1
+            // 
+            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { настройкиУчетнойЗаписиToolStripMenuItem, сменитьПочтовыйЯщикToolStripMenuItem, выйтиИзАккаунтаToolStripMenuItem });
+            contextMenuStrip1.Name = "contextMenuStrip1";
+            contextMenuStrip1.Size = new Size(224, 70);
+            // 
+            // настройкиУчетнойЗаписиToolStripMenuItem
+            // 
+            настройкиУчетнойЗаписиToolStripMenuItem.Name = "настройкиУчетнойЗаписиToolStripMenuItem";
+            настройкиУчетнойЗаписиToolStripMenuItem.Size = new Size(223, 22);
+            настройкиУчетнойЗаписиToolStripMenuItem.Text = "Настройки учетной записи";
+            настройкиУчетнойЗаписиToolStripMenuItem.Click += ChangeUserSettingsToolStripMenuItem_Click;
+            // 
+            // сменитьПочтовыйЯщикToolStripMenuItem
+            // 
+            сменитьПочтовыйЯщикToolStripMenuItem.Name = "сменитьПочтовыйЯщикToolStripMenuItem";
+            сменитьПочтовыйЯщикToolStripMenuItem.Size = new Size(223, 22);
+            сменитьПочтовыйЯщикToolStripMenuItem.Text = "Сменить почтовый ящик";
+            сменитьПочтовыйЯщикToolStripMenuItem.Click += ChangeMailboxToolStripMenuItem_Click;
+            // 
+            // выйтиИзАккаунтаToolStripMenuItem
+            // 
+            выйтиИзАккаунтаToolStripMenuItem.Name = "выйтиИзАккаунтаToolStripMenuItem";
+            выйтиИзАккаунтаToolStripMenuItem.Size = new Size(223, 22);
+            выйтиИзАккаунтаToolStripMenuItem.Text = "Выйти из аккаунта";
+            выйтиИзАккаунтаToolStripMenuItem.Click += LeaveAccountToolStripMenuItem_Click;
+            // 
+            // labelUser
+            // 
+            labelUser.Dock = DockStyle.Fill;
+            labelUser.Location = new Point(0, 0);
+            labelUser.Name = "labelUser";
+            labelUser.Size = new Size(209, 26);
+            labelUser.TabIndex = 0;
+            labelUser.Text = "33 символа";
+            labelUser.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // textBoxSearch
+            // 
+            textBoxSearch.Location = new Point(15, 18);
+            textBoxSearch.Margin = new Padding(10, 10, 0, 10);
+            textBoxSearch.Name = "textBoxSearch";
+            textBoxSearch.Size = new Size(443, 23);
+            textBoxSearch.TabIndex = 0;
             // 
             // panelSidebar
             // 
@@ -199,7 +281,12 @@ namespace MailsApp.Forms
             Controls.Add(panelSidebar);
             Controls.Add(panelTop);
             Name = "FormLetters";
-            Text = "FormLetters";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "MailsApp | Письма";
+            panelTop.ResumeLayout(false);
+            panelTop.PerformLayout();
+            panelUser.ResumeLayout(false);
+            contextMenuStrip1.ResumeLayout(false);
             panelSidebar.ResumeLayout(false);
             ResumeLayout(false);
         }
@@ -218,5 +305,13 @@ namespace MailsApp.Forms
         private Label labelDraft;
         private Label labelFavorite;
         private Label labelSended;
+        private TextBox textBoxSearch;
+        private Panel panelUser;
+        private Button buttonSearch;
+        private ContextMenuStrip contextMenuStrip1;
+        private ToolStripMenuItem настройкиУчетнойЗаписиToolStripMenuItem;
+        private ToolStripMenuItem сменитьПочтовыйЯщикToolStripMenuItem;
+        private ToolStripMenuItem выйтиИзАккаунтаToolStripMenuItem;
+        private Label labelUser;
     }
 }

@@ -101,7 +101,8 @@ namespace MailsApp.Forms
             // 
             // panelAuthorization
             // 
-            panelAuthorization.BackColor = Color.White;
+            panelAuthorization.BackColor = SystemColors.Control;
+            panelAuthorization.BorderStyle = BorderStyle.FixedSingle;
             panelAuthorization.Controls.Add(buttonConfirm);
             panelAuthorization.Controls.Add(passwordTB);
             panelAuthorization.Controls.Add(labelAutorization);
@@ -113,15 +114,19 @@ namespace MailsApp.Forms
             // 
             // panelUserItems
             // 
+            panelUserItems.BackColor = SystemColors.Control;
+            panelUserItems.BorderStyle = BorderStyle.FixedSingle;
             panelUserItems.Location = new Point(394, 84);
             panelUserItems.Name = "panelUserItems";
             panelUserItems.Size = new Size(378, 116);
             panelUserItems.TabIndex = 5;
+            panelUserItems.Visible = false;
             // 
             // FormAuthorization
             // 
             AutoScaleDimensions = new SizeF(10F, 23F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.White;
             ClientSize = new Size(1142, 690);
             Controls.Add(panelUserItems);
             Controls.Add(labelNoAccount);

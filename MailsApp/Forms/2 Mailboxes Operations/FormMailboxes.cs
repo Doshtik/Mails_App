@@ -8,12 +8,12 @@ namespace MailsApp
         private User _user;
         public MailboxItem? _selectedItem;
 
-        public FormMailboxes(int id)
+        public FormMailboxes(int userId)
         {
             InitializeComponent();
             using (MailsAppContext db = new MailsAppContext())
             {
-                _user = db.Users.First(u => u.Id == id);
+                _user = db.Users.First(u => u.Id == userId);
                 this.Text = $"MailsApp | {_user.Firstname} {_user.Lastname} | Почтовые ящики";
             }
         }
@@ -24,6 +24,8 @@ namespace MailsApp
             LoadMailboxes();
         }
 
+        //Метод отрисовывает почтовые ящики и размещает их на panelItems.
+        //А в конце добавляет кнопку создания почтового ящика
         private void LoadMailboxes()
         {
             panelItems.Controls.Clear();
@@ -55,31 +57,27 @@ namespace MailsApp
 
                     panelItems.Controls.Add(item);
                 }
-                Button buttonCreateMailbox = new Button()
-                {
-                    Location = new Point(10, 10 + itemCount),
-                    Width = panelItems.Width - 20
-                };
-                buttonCreateMailbox.Click += (sender, e) => 
-                {
-                    FormMakeMailbox form = new FormMakeMailbox();
-                    form.ShowDialog();
-                    LoadMailboxes();
-                };
             }
-        }
 
-        private void FormMain_SizeChanged(object sender, EventArgs e)
-        {
-            foreach (var control in panelItems.Controls)
+            Button buttonCreateMailbox = new Button()
             {
-                if (control is MailboxItem item)
-                {
-                    item.Width = panelItems.Width - 20;
-                }
-            }
+                Text = "Создать новый почтовый ящик",
+                Location = new Point(10, 10 + itemCount),
+                Height = 45,
+                Width = panelItems.Width - 20
+            };
+
+            buttonCreateMailbox.Click += (sender, e) =>
+            {
+                FormMakeMailbox form = new FormMakeMailbox();
+                form.ShowDialog();
+                LoadMailboxes();
+            };
+
+            panelItems.Controls.Add(buttonCreateMailbox);
         }
 
+        #region Кнопки навигации
         private void buttonSelect_Click(object sender, EventArgs e)
         {
             if (_selectedItem != null)
@@ -101,9 +99,9 @@ namespace MailsApp
             {
                 DialogResult result = MessageBox.Show
                 (
-                    "Вы уверены, что хотите удалить почтовый ящик?", 
-                    "", 
-                    MessageBoxButtons.YesNo, 
+                    "Вы уверены, что хотите удалить почтовый ящик?",
+                    "Подтверждение",
+                    MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question
                 );
                 if (result == DialogResult.Yes)
@@ -120,6 +118,19 @@ namespace MailsApp
             else
             {
                 MessageBox.Show("Вы не выбрали почтовый ящик");
+            }
+        }
+#endregion
+
+        //Позволяет элементам почтовых ящиков растягиваться
+        private void FormMailboxes_SizeChanged(object sender, EventArgs e)
+        {
+            foreach (var control in panelItems.Controls)
+            {
+                if (control is MailboxItem item)
+                {
+                    item.Width = panelItems.Width - 20;
+                }
             }
         }
     }
