@@ -42,7 +42,8 @@ namespace MailsApp.Forms
             // 
             // panel1
             // 
-            panel1.BackColor = Color.White;
+            panel1.BackColor = SystemColors.Control;
+            panel1.BorderStyle = BorderStyle.FixedSingle;
             panel1.Controls.Add(lastnameTB);
             panel1.Controls.Add(firstnameTB);
             panel1.Controls.Add(buttonConfirm);
@@ -113,6 +114,7 @@ namespace MailsApp.Forms
             // 
             AutoScaleDimensions = new SizeF(10F, 23F);
             AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.White;
             ClientSize = new Size(1143, 690);
             Controls.Add(panel1);
             Font = new Font("Calibri", 14.25F);

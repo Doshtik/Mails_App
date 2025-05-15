@@ -48,7 +48,7 @@ namespace MailsApp.Forms
             (
                 "Вы уверены что хотите убрать пользователя из быстрого входа?" +
                 "\nПользователь не будет удалён", 
-                "Подтвекрждение", 
+                "Подтверждение", 
                 MessageBoxButtons.YesNo, 
                 MessageBoxIcon.Question
             );
