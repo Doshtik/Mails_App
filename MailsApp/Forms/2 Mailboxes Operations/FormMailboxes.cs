@@ -69,7 +69,7 @@ namespace MailsApp
 
             buttonCreateMailbox.Click += (sender, e) =>
             {
-                FormMakeMailbox form = new FormMakeMailbox();
+                FormMakeMailbox form = new FormMakeMailbox(_user.Id);
                 form.ShowDialog();
                 LoadMailboxes();
             };

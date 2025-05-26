@@ -37,8 +37,7 @@ namespace MailsApp.Forms._3_Letters_Operations
 
         private void LabelTheme_Click(object sender, EventArgs e)
         {
-            FormReadLetter form = new FormReadLetter(Id);
-            form.ShowDialog();
+            LabelMessage_Click(sender, e);
         }
 
         private void LabelMessage_Click(object sender, EventArgs e)

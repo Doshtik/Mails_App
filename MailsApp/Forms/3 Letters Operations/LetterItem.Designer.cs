@@ -40,18 +40,20 @@ namespace MailsApp.Forms._3_Letters_Operations
             // checkBoxSelected
             // 
             checkBoxSelected.CheckAlign = ContentAlignment.MiddleCenter;
-            checkBoxSelected.Location = new Point(0, 4);
+            checkBoxSelected.Location = new Point(0, 0);
             checkBoxSelected.Name = "checkBoxSelected";
-            checkBoxSelected.Size = new Size(41, 30);
+            checkBoxSelected.Size = new Size(41, 40);
             checkBoxSelected.TabIndex = 0;
             checkBoxSelected.UseVisualStyleBackColor = true;
             // 
             // labelTheme
             // 
+            labelTheme.BorderStyle = BorderStyle.FixedSingle;
             labelTheme.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            labelTheme.Location = new Point(79, 4);
+            labelTheme.Location = new Point(79, 0);
+            labelTheme.Margin = new Padding(0);
             labelTheme.Name = "labelTheme";
-            labelTheme.Size = new Size(126, 30);
+            labelTheme.Size = new Size(126, 40);
             labelTheme.TabIndex = 1;
             labelTheme.Text = "Тема сообщения";
             labelTheme.TextAlign = ContentAlignment.MiddleLeft;
@@ -59,9 +61,11 @@ namespace MailsApp.Forms._3_Letters_Operations
             // 
             // labelMessage
             // 
-            labelMessage.Location = new Point(211, 4);
+            labelMessage.BorderStyle = BorderStyle.FixedSingle;
+            labelMessage.Location = new Point(205, 0);
+            labelMessage.Margin = new Padding(0);
             labelMessage.Name = "labelMessage";
-            labelMessage.Size = new Size(282, 30);
+            labelMessage.Size = new Size(292, 40);
             labelMessage.TabIndex = 4;
             labelMessage.Text = "Содержимое сообщения";
             labelMessage.TextAlign = ContentAlignment.MiddleLeft;
@@ -69,9 +73,11 @@ namespace MailsApp.Forms._3_Letters_Operations
             // 
             // labelTime
             // 
-            labelTime.Location = new Point(499, 4);
+            labelTime.BorderStyle = BorderStyle.FixedSingle;
+            labelTime.Location = new Point(497, 0);
+            labelTime.Margin = new Padding(0);
             labelTime.Name = "labelTime";
-            labelTime.Size = new Size(73, 30);
+            labelTime.Size = new Size(81, 40);
             labelTime.TabIndex = 5;
             labelTime.Text = "13 апр.";
             labelTime.TextAlign = ContentAlignment.MiddleCenter;
@@ -79,9 +85,9 @@ namespace MailsApp.Forms._3_Letters_Operations
             // checkBoxFavorite
             // 
             checkBoxFavorite.CheckAlign = ContentAlignment.MiddleCenter;
-            checkBoxFavorite.Location = new Point(39, 4);
+            checkBoxFavorite.Location = new Point(39, 0);
             checkBoxFavorite.Name = "checkBoxFavorite";
-            checkBoxFavorite.Size = new Size(34, 30);
+            checkBoxFavorite.Size = new Size(37, 40);
             checkBoxFavorite.TabIndex = 6;
             checkBoxFavorite.UseVisualStyleBackColor = true;
             // 
@@ -96,6 +102,7 @@ namespace MailsApp.Forms._3_Letters_Operations
             Controls.Add(labelMessage);
             Controls.Add(labelTheme);
             Controls.Add(checkBoxSelected);
+            Margin = new Padding(0);
             Name = "LetterItem";
             Size = new Size(578, 40);
             ResumeLayout(false);

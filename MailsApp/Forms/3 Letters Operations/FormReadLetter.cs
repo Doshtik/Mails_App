@@ -12,9 +12,11 @@ namespace MailsApp.Forms._3_Letters_Operations
 {
     public partial class FormReadLetter : Form
     {
+        private int _id;
         public FormReadLetter(int letterId)
         {
             InitializeComponent();
+            _id = letterId;
         }
     }
 }

@@ -8,6 +8,7 @@ namespace MailsApp.Models;
 /// </summary>
 public partial class Letter
 {
+    #region Поля
     public int Id { get; set; }
 
     public int IdStatus { get; set; }
@@ -33,7 +34,9 @@ public partial class Letter
     public bool IsRead { get; set; }
 
     public virtual ICollection<Attachment> Attachments { get; set; } = new List<Attachment>();
+    #endregion
 
+    #region Связи
     public virtual MailLabel? IdLabelNavigation { get; set; }
 
     public virtual Letter? IdLetterNavigation { get; set; }
@@ -45,4 +48,24 @@ public partial class Letter
     public virtual Status IdStatusNavigation { get; set; } = null!;
 
     public virtual ICollection<Letter> InverseIdLetterNavigation { get; set; } = new List<Letter>();
+    #endregion
+
+    #region Конструкторы
+    public Letter() { }
+    public Letter(int idStatus, int idSender, int idRecipient, 
+        int idRecipientCopy, string message, DateTime dateTime, string? theme = null, int? idLabel = null,
+        bool isFavorite = false, bool isRead = false)
+    {
+        IdStatus = idStatus;
+        IdMailboxSender = idSender;
+        IdMailboxRecipient = idRecipient;
+        IdCopyRecipient = idRecipientCopy;
+        Theme = theme;
+        Message = message;
+        Date = dateTime;
+        IsFavorite = isFavorite;
+        IsRead = isRead;
+        IdLabel = idLabel;
+    }
+    #endregion
 }

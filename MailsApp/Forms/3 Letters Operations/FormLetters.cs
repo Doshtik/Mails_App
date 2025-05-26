@@ -19,15 +19,15 @@ namespace MailsApp.Forms
         private Mailbox _mailbox;
         private Label _selectedLabel;
 
-        public FormLetters(int id)
+        public FormLetters(int idMailbox)
         {
             InitializeComponent();
             using (MailsAppContext db = new MailsAppContext())
             {
-                _mailbox = db.Mailboxes.First(mb => mb.Id == id);
+                _mailbox = db.Mailboxes.First(mb => mb.Id == idMailbox);
 
                 Models.User user = db.Users.First(u => u.Id == _mailbox.IdUser);
-                this.Text = $"MailsApp | {user.Firstname} {user.Lastname} | Письма";
+                this.Text = $"MailsApp | {user.Firstname} {user.Lastname} | {_mailbox.MailName} | Письма";
                 labelUser.Text = $"{user.Firstname} {user.Lastname}";
             }
         }
@@ -76,7 +76,7 @@ namespace MailsApp.Forms
         #region Кнопки panelSidebar
         private void buttonMakeLetter_Click(object sender, EventArgs e)
         {
-            FormMakeLetter form = new FormMakeLetter();
+            FormMakeLetter form = new FormMakeLetter(_mailbox.Id);
             form.ShowDialog();
 
             switch (_selectedLabel.Name)//Обновляем информацию
@@ -112,12 +112,12 @@ namespace MailsApp.Forms
             using (MailsAppContext db = new MailsAppContext())
             {
                 Letter[] letters = db.Letters
-                    .Where(l => l.IdCopyRecipient == _mailbox.IdUser)
+                    .Where(l => l.IdCopyRecipient == _mailbox.Id)
                     .ToArray();
                 DrawLetters(letters);
 
                 Models.User user = db.Users.First(u => u.Id == _mailbox.IdUser);
-                this.Text = $"MailsApp | {user.Firstname} {user.Lastname} | Письма | Вся почта";
+                this.Text = $"MailsApp | {user.Firstname} {user.Lastname} | {_mailbox.MailName} | Письма | Вся почта";
             }
         }
 
@@ -128,12 +128,12 @@ namespace MailsApp.Forms
             using (MailsAppContext db = new MailsAppContext())
             {
                 Letter[] letters = db.Letters
-                    .Where(l => l.IdMailboxRecipient == _mailbox.IdUser && l.IdCopyRecipient == _mailbox.IdUser)
+                    .Where(l => l.IdMailboxRecipient == _mailbox.Id && l.IdCopyRecipient == _mailbox.Id)
                     .ToArray();
                 DrawLetters(letters);
 
                 Models.User user = db.Users.First(u => u.Id == _mailbox.IdUser);
-                this.Text = $"MailsApp | {user.Firstname} {user.Lastname} | Письма | Входящие";
+                this.Text = $"MailsApp | {user.Firstname} {user.Lastname} | {_mailbox.MailName} | Письма | Входящие";
             }
         }
 
@@ -144,12 +144,12 @@ namespace MailsApp.Forms
             using (MailsAppContext db = new MailsAppContext())
             {
                 Letter[] letters = db.Letters
-                    .Where(l => l.IdMailboxSender == _mailbox.IdUser && l.IdCopyRecipient == _mailbox.IdUser)
+                    .Where(l => l.IdMailboxSender == _mailbox.Id && l.IdCopyRecipient == _mailbox.Id)
                     .ToArray();
                 DrawLetters(letters);
 
                 Models.User user = db.Users.First(u => u.Id == _mailbox.IdUser);
-                this.Text = $"MailsApp | {user.Firstname} {user.Lastname} | Письма | Отправленные";
+                this.Text = $"MailsApp | {user.Firstname} {user.Lastname} | {_mailbox.MailName} | Письма | Отправленные";
             }
         }
 
@@ -160,12 +160,12 @@ namespace MailsApp.Forms
             using (MailsAppContext db = new MailsAppContext())
             {
                 Letter[] letters = db.Letters
-                    .Where(l => l.IsFavorite == true && l.IdCopyRecipient == _mailbox.IdUser)
+                    .Where(l => l.IdCopyRecipient == _mailbox.Id && l.IsFavorite == true)
                     .ToArray();
                 DrawLetters(letters);
 
                 Models.User user = db.Users.First(u => u.Id == _mailbox.IdUser);
-                this.Text = $"MailsApp | {user.Firstname} {user.Lastname} | Письма | Избранные";
+                this.Text = $"MailsApp | {user.Firstname} {user.Lastname} | {_mailbox.MailName} | Письма | Избранные";
             }
         }
 
@@ -177,12 +177,12 @@ namespace MailsApp.Forms
             {
                 int statusId = db.Statuses.First(s => s.StatusName == "draft").Id;
                 Letter[] letters = db.Letters
-                    .Where(l => l.IdStatus == statusId && l.IdCopyRecipient == _mailbox.IdUser)
+                    .Where(l => l.IdCopyRecipient == _mailbox.Id && l.IdStatus == statusId)
                     .ToArray();
                 DrawLetters(letters);
 
                 Models.User user = db.Users.First(u => u.Id == _mailbox.IdUser);
-                this.Text = $"MailsApp | {user.Firstname} {user.Lastname} | Письма | Черновик";
+                this.Text = $"MailsApp | {user.Firstname} {user.Lastname} | {_mailbox.MailName} | Письма | Черновик";
             }
         }
 
@@ -194,12 +194,12 @@ namespace MailsApp.Forms
             {
                 int statusId = db.Statuses.First(s => s.StatusName == "deleted").Id;
                 Letter[] letters = db.Letters
-                    .Where(l => l.IdStatus == statusId && l.IdCopyRecipient == _mailbox.IdUser)
+                    .Where(l => l.IdCopyRecipient == _mailbox.Id && l.IdStatus == statusId)
                     .ToArray();
                 DrawLetters(letters);
 
                 Models.User user = db.Users.First(u => u.Id == _mailbox.IdUser);
-                this.Text = $"MailsApp | {user.Firstname} {user.Lastname} | Письма | Корзина";
+                this.Text = $"MailsApp | {user.Firstname} {user.Lastname} | {_mailbox.MailName} | Письма | Корзина";
             }
         }
         #endregion
