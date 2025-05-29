@@ -8,6 +8,7 @@ namespace MailsApp.Forms
         private int _idMailboxSender;
         private string[] _filePathes;
         private string _attachmentsDir;
+        private int? _idLetterResponce;
 
         //Глобальная переменная для хранения позиции Y для копий письма
         private int _y;
@@ -19,6 +20,16 @@ namespace MailsApp.Forms
             //Получаем Id отправителя
             _idMailboxSender = idMailboxSender;
             listRecipientCopy = new List<TextBox>();
+            this.Text = "Новое сообщение";
+        }
+        public FormMakeLetter(int idMailboxSender, int idLetterResponce)
+        {
+            InitializeComponent();
+            //Получаем Id отправителя
+            _idMailboxSender = idMailboxSender;
+            listRecipientCopy = new List<TextBox>();
+            _idLetterResponce = idLetterResponce;
+            this.Text = "Новое сообщение | Ответ другое сообщение";
         }
 
         protected override void OnLoad(EventArgs e)
@@ -100,151 +111,6 @@ namespace MailsApp.Forms
             }
         }
 
-        /*private void buttonSend1_Click(object sender, EventArgs e)
-        {
-            //Проверяем поле на null
-            if (textBoxRecipient.Text != null)
-            {
-                using (MailsAppContext db = new MailsAppContext())
-                {
-                    //Находим получателя по почтовому ящику
-                    Mailbox mailbox = db.Mailboxes.First(mb => mb.MailName == textBoxRecipient.Text);
-                    if (mailbox != null)
-                    {
-                        //Если пользователь не указал ни тему ни тело сообщения делаем подтверждение отправки
-                        if (textBoxMassage.Text == String.Empty && textBoxTheme.Text == String.Empty)
-                        {
-                            if (MessageBox.Show ("Вы действительно хотите отправить сообщение без темы и сообщения?",
-                            "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
-                            {
-                                return;
-                            }
-                        }
-
-                        int idSended = db.Statuses.First(s => s.StatusName.Equals("sent")).Id;
-
-                        //Создаем письма
-                        Letter letterSender = new Letter(idSended, _idMailboxSender, mailbox.Id,
-                            _idMailboxSender, textBoxMassage.Text, DateTime.UtcNow, textBoxTheme.Text);
-
-                        Letter letterRecipient = new Letter(idSended, _idMailboxSender, mailbox.Id,
-                            mailbox.Id, textBoxMassage.Text, DateTime.UtcNow, textBoxTheme.Text);
-
-                        //Добавляем письма в БД
-                        db.Letters.Add(letterSender);
-                        db.Letters.Add(letterRecipient);
-                        db.SaveChanges();
-
-                        //Проверяем наличие вложений
-                        if (_filePathes != null)
-                        {
-                            foreach (string file in _filePathes)
-                            {
-                                if (file != null)
-                                {
-                                    //Получаеам файл и копируем в папку AppData
-                                    //(В реальном проекте пришлось бы загружать на сервер)
-                                    string fileName = Path.GetFileName(file);
-                                    string filePath = Path.Combine(_attachmentsDir, fileName);
-                                    try 
-                                    { 
-                                        File.Copy(file, filePath); 
-                                    }
-                                    catch 
-                                    { 
-                                        MessageBox.Show("Файл уже существует в хранилище. К нему будет добавлена приписка \"_copy\"", 
-                                        "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                                        fileName = Path.GetFileNameWithoutExtension(file);
-                                        string ext = Path.GetExtension(file);
-                                        fileName = fileName + "_copy" + ext;
-                                        filePath = Path.Combine(_attachmentsDir, fileName);
-
-                                        File.Copy(file, filePath);
-                                    }
-
-                                    //Создаем записи вложений для БД
-                                    Attachment attachSender = new Attachment()
-                                    {
-                                        IdLetter = letterSender.Id,
-                                        FileName = fileName
-                                    };
-
-                                    Attachment attachRecipient = new Attachment()
-                                    {
-                                        IdLetter = letterRecipient.Id,
-                                        FileName = fileName
-                                    };
-
-                                    //Добавляем записи вложений в БД
-                                    db.Attachments.Add(attachSender);
-                                    db.Attachments.Add(attachRecipient);
-                                    db.SaveChanges();
-                                }
-                            }
-                        }
-
-                        //Получаем список получателей, указанных в копии
-                        //Процесс мало чем отличается от выше написанного
-                        TextBox[] textBoxes = panelRecipient.Controls.Find("textBoxCopy", false) as TextBox[];
-                        if (textBoxes != null)
-                        {
-                            foreach (TextBox tb in textBoxes)
-                            {
-                                MessageBox.Show($"{tb.Text}");
-                                Mailbox mb = db.Mailboxes.First(m => m.MailName.Equals(tb.Text));
-
-                                if (mb != null)
-                                {
-                                    MessageBox.Show($"{mb.MailName} - найден");
-                                    Letter letterRecipientCopy = new Letter(idSended, _idMailboxSender, mailbox.Id,
-                                        mb.Id, textBoxMassage.Text, DateTime.UtcNow, textBoxTheme.Text);
-
-                                    db.Letters.Add(letterRecipientCopy);
-
-                                    if (_filePathes != null)
-                                    {
-                                        foreach (string file in _filePathes)
-                                        {
-                                            if (file != null)
-                                            {
-                                                string fileName = Path.GetFileName(file);
-
-                                                Attachment attachRecipientCopy = new Attachment()
-                                                {
-                                                    IdLetter = letterRecipientCopy.Id,
-                                                    FileName = fileName
-                                                };
-
-                                                db.Attachments.Add(attachRecipientCopy);
-                                                db.SaveChanges();
-                                            }
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    MessageBox.Show($"Получатель {tb.Text} не найден или указан неверно",
-                                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                }
-                            }
-                        }
-                        MessageBox.Show("Письмо успешно отправлено", 
-                        "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        this.Close();
-                        }
-                    else
-                    {
-                        MessageBox.Show($"Получатель {textBoxRecipient.Text} не найден или указан неверно", 
-                        "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-            }
-            else
-            {
-                MessageBox.Show("Получатель не указан", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }*/
         private void buttonSend_Click(object sender, EventArgs e)
         {
             //Проверяем поле на null
@@ -293,16 +159,14 @@ namespace MailsApp.Forms
                     }
                 }
 
-
-
                 int idSended = db.Statuses.First(s => s.StatusName.Equals("sent")).Id;
 
                 //Создаем письма
                 Letter letterSender = new Letter(idSended, _idMailboxSender, mailboxRecipient.Id,
-                    _idMailboxSender, textBoxMassage.Text, DateTime.UtcNow, textBoxTheme.Text);
+                    _idMailboxSender, textBoxMassage.Text, DateTime.UtcNow, textBoxTheme.Text, _idLetterResponce);
 
                 Letter letterRecipient = new Letter(idSended, _idMailboxSender, mailboxRecipient.Id,
-                    mailboxRecipient.Id, textBoxMassage.Text, DateTime.UtcNow, textBoxTheme.Text);
+                    mailboxRecipient.Id, textBoxMassage.Text, DateTime.UtcNow, textBoxTheme.Text, _idLetterResponce);
 
                 //Добавляем письма в БД
                 db.Letters.Add(letterSender);
@@ -345,7 +209,7 @@ namespace MailsApp.Forms
                 foreach (Mailbox mailboxRecipientCopy in mailboxesRecipientCopy)
                 {
                     Letter letterRecipientCopy = new Letter(idSended, _idMailboxSender, mailboxRecipient.Id,
-                    mailboxRecipientCopy.Id, textBoxMassage.Text, DateTime.UtcNow, textBoxTheme.Text);
+                    mailboxRecipientCopy.Id, textBoxMassage.Text, DateTime.UtcNow, textBoxTheme.Text, _idLetterResponce);
 
                     db.Letters.Add(letterRecipientCopy);
                     db.SaveChanges();

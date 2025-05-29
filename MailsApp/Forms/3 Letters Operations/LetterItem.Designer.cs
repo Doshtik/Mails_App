@@ -42,7 +42,7 @@ namespace MailsApp.Forms._3_Letters_Operations
             checkBoxSelected.CheckAlign = ContentAlignment.MiddleCenter;
             checkBoxSelected.Location = new Point(0, 0);
             checkBoxSelected.Name = "checkBoxSelected";
-            checkBoxSelected.Size = new Size(41, 40);
+            checkBoxSelected.Size = new Size(34, 40);
             checkBoxSelected.TabIndex = 0;
             checkBoxSelected.UseVisualStyleBackColor = true;
             // 
@@ -85,9 +85,9 @@ namespace MailsApp.Forms._3_Letters_Operations
             // checkBoxFavorite
             // 
             checkBoxFavorite.CheckAlign = ContentAlignment.MiddleCenter;
-            checkBoxFavorite.Location = new Point(39, 0);
+            checkBoxFavorite.Location = new Point(40, 0);
             checkBoxFavorite.Name = "checkBoxFavorite";
-            checkBoxFavorite.Size = new Size(37, 40);
+            checkBoxFavorite.Size = new Size(36, 40);
             checkBoxFavorite.TabIndex = 6;
             checkBoxFavorite.UseVisualStyleBackColor = true;
             // 
@@ -96,7 +96,7 @@ namespace MailsApp.Forms._3_Letters_Operations
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoValidate = AutoValidate.Disable;
-            BackColor = Color.Silver;
+            BackColor = SystemColors.Control;
             Controls.Add(checkBoxFavorite);
             Controls.Add(labelTime);
             Controls.Add(labelMessage);

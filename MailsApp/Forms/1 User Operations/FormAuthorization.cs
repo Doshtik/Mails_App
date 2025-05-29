@@ -21,61 +21,67 @@ namespace MailsApp.Forms
         {
             InitializeComponent();
         }
+
         protected override void OnLoad(EventArgs e)
         {
-            base.OnLoad(e);
             if (!File.Exists("config.txt"))
             {
                 Program.CreateConfigFile();
+                return;
             }
-            else
+
+            string password = Program.GetValueFromConfigFile<string>("password");
+            string phoneNumber = Program.GetValueFromConfigFile<string>("phone_number");
+
+            using (MailsAppContext db = new MailsAppContext())
             {
-                string password = Program.GetValueFromConfigFile<string>("password");
-                string phoneNumber = Program.GetValueFromConfigFile<string>("phone_number");
-                using (MailsAppContext db = new MailsAppContext())
+                Models.User? user = db.Users
+                    .Where(u => u.PhoneNumber.Equals(phoneNumber) && u.Password.Equals(password))
+                    .FirstOrDefault();
+                if (user != null)
                 {
-                    Models.User? user = db.Users
-                        .Where(u => u.PhoneNumber.Equals(phoneNumber) && u.Password.Equals(password))
-                        .FirstOrDefault();
-                    if (user != null)
+                    _user = user;
+                    UserItem userItem = new UserItem(user.Firstname, user.Lastname, phoneNumber, password);
+                    userItem.OnEntrancePressed += (sender, e) => NextTo();
+                    userItem.OnClearPressed += (sender, e) =>
                     {
-                        _user = user;
-                        UserItem userItem = new UserItem(user.Firstname, user.Lastname, phoneNumber, password);
-                        userItem.OnEntrancePressed += (sender, e) => NextTo();
-                        userItem.OnClearPressed += (sender, e) => ClearPanel();
-                        panelUserItems.Controls.Add(userItem);
-                        panelUserItems.Visible = true;
-                    }
+                        Program.SetValueToConfigFile<string>("phone_number", "");
+                        Program.SetValueToConfigFile<string>("password", "");
+                        panelUserItems.Controls.Clear();
+                        panelUserItems.Visible = false;
+                    };
+                    panelUserItems.Controls.Add(userItem);
+                    panelUserItems.Visible = true;
                 }
             }
+
+            base.OnLoad(e);
         }
 
         private void buttonConfirm_Click(object sender, EventArgs e)
         {
             string password = passwordTB.Text.Trim();
             string phoneNumber = phoneNumberTB.Text.Trim();
+
             if (password.Length == 0 || phoneNumber.Length == 0)
             {
-                MessageBox.Show(
-                    "Вы оставили поле не заполненным",
-                    "Внимание",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
+                MessageBox.Show( "Вы оставили поле не заполненным",
+                    "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
             }
-            else
+
+            using (MailsAppContext db = new MailsAppContext())
             {
-                using (MailsAppContext db = new MailsAppContext())
+                Models.User? user = db.Users
+                    .Where(u => u.PhoneNumber.Equals(phoneNumber) && u.Password.Equals(password))
+                    .FirstOrDefault();
+
+                if (user != null)
                 {
-                    Models.User? user = db.Users
-                        .Where(u => u.PhoneNumber.Equals(phoneNumber) && u.Password.Equals(password))
-                        .FirstOrDefault();
-                    if (user != null)
-                    {
-                        _user = user;
-                        Program.SetValueToConfigFile<string>("phone_number", user.PhoneNumber);
-                        Program.SetValueToConfigFile<string>("password", user.Password);
-                        NextTo();
-                    }
+                    _user = user;
+                    Program.SetValueToConfigFile<string>("phone_number", user.PhoneNumber);
+                    Program.SetValueToConfigFile<string>("password", user.Password);
+                    NextTo();
                 }
             }
         }
@@ -88,15 +94,6 @@ namespace MailsApp.Forms
             this.Close();
         }
 
-        private void ClearPanel() 
-        {
-            Program.SetValueToConfigFile<string>("phone_number", "");
-            Program.SetValueToConfigFile<string>("password", "");
-            panelUserItems.Controls.Clear();
-            panelUserItems.Visible = false;
-        }
-
-
         private void LinkRegistration_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             FormRegistration form = new FormRegistration();
@@ -104,6 +101,15 @@ namespace MailsApp.Forms
             form.ShowDialog();
             this.OnLoad(new EventArgs());
             this.Visible = true;
+        }
+
+        private void phoneNumberTB_Click(object sender, EventArgs e)
+        {
+            if (phoneNumberTB.Text.Trim().Length == 0)
+            {
+                phoneNumberTB.Text = "+7";
+                phoneNumberTB.SelectionStart = 3;
+            }
         }
     }
 }

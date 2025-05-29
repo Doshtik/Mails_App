@@ -80,6 +80,7 @@ namespace MailsApp.Forms
             buttonSearch.TabIndex = 2;
             buttonSearch.Text = "Поиск";
             buttonSearch.UseVisualStyleBackColor = true;
+            buttonSearch.Click += buttonSearch_Click;
             // 
             // panelUser
             // 
@@ -261,6 +262,7 @@ namespace MailsApp.Forms
             // 
             // panelMessages
             // 
+            panelMessages.AutoScroll = true;
             panelMessages.BackColor = Color.White;
             panelMessages.BorderStyle = BorderStyle.FixedSingle;
             panelMessages.Dock = DockStyle.Fill;
@@ -283,6 +285,7 @@ namespace MailsApp.Forms
             Name = "FormLetters";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "MailsApp | Письма";
+            SizeChanged += FormLetters_SizeChanged;
             panelTop.ResumeLayout(false);
             panelTop.PerformLayout();
             panelUser.ResumeLayout(false);

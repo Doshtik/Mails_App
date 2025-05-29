@@ -1,6 +1,7 @@
 ﻿using MailsApp.Forms._1_User_Operations;
 using MailsApp.Forms._3_Letters_Operations;
 using MailsApp.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic.ApplicationServices;
 using System;
 using System.Collections.Generic;
@@ -25,10 +26,6 @@ namespace MailsApp.Forms
             using (MailsAppContext db = new MailsAppContext())
             {
                 _mailbox = db.Mailboxes.First(mb => mb.Id == idMailbox);
-
-                Models.User user = db.Users.First(u => u.Id == _mailbox.IdUser);
-                this.Text = $"MailsApp | {user.Firstname} {user.Lastname} | {_mailbox.MailName} | Письма";
-                labelUser.Text = $"{user.Firstname} {user.Lastname}";
             }
         }
 
@@ -36,6 +33,12 @@ namespace MailsApp.Forms
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
+            using (MailsAppContext db = new MailsAppContext())
+            {
+                Models.User user = db.Users.First(u => u.Id == _mailbox.IdUser);
+                this.Text = $"MailsApp | {user.Firstname} {user.Lastname} | {_mailbox.MailName} | Письма";
+                labelUser.Text = $"{user.Firstname} {user.Lastname}";
+            }
             LabelIncoming_Click(labelIncoming, e);
         }
 
@@ -56,10 +59,11 @@ namespace MailsApp.Forms
                 LetterItem item = new LetterItem(letter.Id, letter.IsFavorite, theme, letter.Message, letter.Date)
                 {
                     Location = Location = new Point(10, 10 + itemCount),
-                    Width = panelMessages.Width - 20
+                    Width = panelMessages.Width - 30
                 };
                 itemCount += 50;
                 panelMessages.Controls.Add(item);
+                this.CenterToScreen();
             }
         }
         private void ChangeLabelColor(Label label)
@@ -79,7 +83,7 @@ namespace MailsApp.Forms
             FormMakeLetter form = new FormMakeLetter(_mailbox.Id);
             form.ShowDialog();
 
-            switch (_selectedLabel.Name)//Обновляем информацию
+            switch (_selectedLabel.Name) //Обновляем информацию
             {
                 case "LabelAllMails":
                     LabelAllMails_Click(labelAllMails, EventArgs.Empty);
@@ -204,7 +208,7 @@ namespace MailsApp.Forms
         }
         #endregion
 
-
+        #region ToolStripMenu events
         private void ChangeMailboxToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FormMailboxes form = new FormMailboxes(_mailbox.IdUser);
@@ -223,8 +227,47 @@ namespace MailsApp.Forms
 
         private void ChangeUserSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormUserSettings form = new FormUserSettings();
+            FormUserSettings form = new FormUserSettings(_mailbox.IdUser);
             form.ShowDialog();
+            using (MailsAppContext db = new MailsAppContext())
+            {
+                Models.User user = db.Users.First(u => u.Id == _mailbox.IdUser);
+                labelUser.Text = $"{user.Firstname} {user.Lastname}";
+            }
+
+        }
+        #endregion
+
+        private void FormLetters_SizeChanged(object sender, EventArgs e)
+        {
+            if (panelMessages == null)
+                return;
+
+            foreach (Control control in panelMessages.Controls)
+            {
+                if (control is LetterItem)
+                {
+                    LetterItem item = (LetterItem)control;
+                    item.LetterItem_SizeChanged(sender, e);
+                }
+            }
+        }
+
+        private void buttonSearch_Click(object sender, EventArgs e)
+        {
+            string pattern = textBoxSearch.Text.Trim();
+            if (pattern == string.Empty)
+                return;
+
+            using (MailsAppContext db = new MailsAppContext())
+            {
+                string regPattern = $"%{pattern}%";
+                Letter[] letters = db.Letters
+                    .Where(l => EF.Functions.ILike(l.Theme, regPattern) ||
+                               EF.Functions.ILike(l.Message, regPattern))
+                    .ToArray();
+                DrawLetters(letters);
+            }
         }
     }
 }

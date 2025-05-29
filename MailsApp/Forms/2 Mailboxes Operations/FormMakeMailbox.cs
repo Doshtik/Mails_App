@@ -30,17 +30,19 @@ namespace MailsApp.Forms
             if (!regex.Match(mbName).Success)
             {
                 MessageBox.Show("Введённый почтовый ящик не подходит",
-                "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             using (MailsAppContext db = new MailsAppContext())
             {
-                Mailbox mailbox = db.Mailboxes.First(mb => mb.MailName.Equals(mbName));
-                if (mailbox == null)
+                Mailbox mailbox = db.Mailboxes.FirstOrDefault(mb => mb.MailName == mbName);
+
+                if (mailbox != null)
                 {
                     MessageBox.Show("Данный почтовый ящик уже существует. Придумайте другое название",
-                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
 
                 mailbox = new Mailbox()
@@ -52,7 +54,7 @@ namespace MailsApp.Forms
                 db.SaveChanges();
 
                 MessageBox.Show("Почтовый ящик успешно создан", "Информация",
-                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
                 this.Close();
             }
         }

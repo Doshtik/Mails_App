@@ -53,7 +53,8 @@ public partial class Letter
     #region Конструкторы
     public Letter() { }
     public Letter(int idStatus, int idSender, int idRecipient, 
-        int idRecipientCopy, string message, DateTime dateTime, string? theme = null, int? idLabel = null,
+        int idRecipientCopy, string message, DateTime dateTime, string? theme = null, 
+        int? idLetterResponce = null, int? idLabel = null, 
         bool isFavorite = false, bool isRead = false)
     {
         IdStatus = idStatus;
@@ -63,6 +64,7 @@ public partial class Letter
         Theme = theme;
         Message = message;
         Date = dateTime;
+        IdLetter = idLetterResponce;
         IsFavorite = isFavorite;
         IsRead = isRead;
         IdLabel = idLabel;

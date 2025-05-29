@@ -60,6 +60,7 @@ namespace MailsApp.Forms
             phoneNumberTB.PlaceholderText = "Номер телефона";
             phoneNumberTB.Size = new Size(250, 31);
             phoneNumberTB.TabIndex = 1;
+            phoneNumberTB.Click += phoneNumberTB_Click;
             // 
             // buttonConfirm
             // 

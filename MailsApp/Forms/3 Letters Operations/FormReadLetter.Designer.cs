@@ -28,89 +28,116 @@
         /// </summary>
         private void InitializeComponent()
         {
-            panel1 = new Panel();
-            panel2 = new Panel();
-            panel3 = new Panel();
-            panel4 = new Panel();
-            button1 = new Button();
-            button2 = new Button();
-            button3 = new Button();
-            button4 = new Button();
-            panel1.SuspendLayout();
+            panelAction = new Panel();
+            buttonResponce = new Button();
+            buttonMarkUnread = new Button();
+            buttonDelete = new Button();
+            panelTheme = new Panel();
+            labelTheme = new Label();
+            panelUser = new Panel();
+            panelMessage = new Panel();
+            textBoxMessage = new TextBox();
+            panelAction.SuspendLayout();
+            panelTheme.SuspendLayout();
+            panelMessage.SuspendLayout();
             SuspendLayout();
             // 
-            // panel1
+            // panelAction
             // 
-            panel1.BackColor = Color.White;
-            panel1.Controls.Add(button4);
-            panel1.Controls.Add(button3);
-            panel1.Controls.Add(button2);
-            panel1.Controls.Add(button1);
-            panel1.Dock = DockStyle.Top;
-            panel1.Location = new Point(0, 0);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(800, 47);
-            panel1.TabIndex = 0;
+            panelAction.BackColor = Color.White;
+            panelAction.BorderStyle = BorderStyle.FixedSingle;
+            panelAction.Controls.Add(buttonResponce);
+            panelAction.Controls.Add(buttonMarkUnread);
+            panelAction.Controls.Add(buttonDelete);
+            panelAction.Dock = DockStyle.Top;
+            panelAction.Location = new Point(0, 0);
+            panelAction.Name = "panelAction";
+            panelAction.Size = new Size(800, 47);
+            panelAction.TabIndex = 0;
             // 
-            // panel2
+            // buttonResponce
             // 
-            panel2.Dock = DockStyle.Top;
-            panel2.Location = new Point(0, 47);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(800, 47);
-            panel2.TabIndex = 1;
+            buttonResponce.Font = new Font("Arial", 9.75F);
+            buttonResponce.Location = new Point(93, 12);
+            buttonResponce.Name = "buttonResponce";
+            buttonResponce.Size = new Size(75, 23);
+            buttonResponce.TabIndex = 2;
+            buttonResponce.Text = "Ответить";
+            buttonResponce.UseVisualStyleBackColor = true;
+            buttonResponce.Click += buttonResponce_Click;
             // 
-            // panel3
+            // buttonMarkUnread
             // 
-            panel3.Dock = DockStyle.Top;
-            panel3.Location = new Point(0, 94);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(800, 50);
-            panel3.TabIndex = 2;
+            buttonMarkUnread.Font = new Font("Arial", 9.75F);
+            buttonMarkUnread.Location = new Point(174, 12);
+            buttonMarkUnread.Name = "buttonMarkUnread";
+            buttonMarkUnread.Size = new Size(194, 23);
+            buttonMarkUnread.TabIndex = 1;
+            buttonMarkUnread.Text = "Отметить как непрочитанное";
+            buttonMarkUnread.UseVisualStyleBackColor = true;
             // 
-            // panel4
+            // buttonDelete
             // 
-            panel4.Dock = DockStyle.Fill;
-            panel4.Location = new Point(0, 144);
-            panel4.Name = "panel4";
-            panel4.Size = new Size(800, 306);
-            panel4.TabIndex = 3;
+            buttonDelete.Font = new Font("Arial", 9.75F);
+            buttonDelete.Location = new Point(12, 12);
+            buttonDelete.Name = "buttonDelete";
+            buttonDelete.Size = new Size(75, 23);
+            buttonDelete.TabIndex = 0;
+            buttonDelete.Text = "Удалить";
+            buttonDelete.UseVisualStyleBackColor = true;
+            buttonDelete.Click += buttonDelete_Click;
             // 
-            // button1
+            // panelTheme
             // 
-            button1.Location = new Point(12, 12);
-            button1.Name = "button1";
-            button1.Size = new Size(75, 23);
-            button1.TabIndex = 0;
-            button1.Text = "Удалить";
-            button1.UseVisualStyleBackColor = true;
+            panelTheme.BorderStyle = BorderStyle.FixedSingle;
+            panelTheme.Controls.Add(labelTheme);
+            panelTheme.Dock = DockStyle.Top;
+            panelTheme.Location = new Point(0, 47);
+            panelTheme.Name = "panelTheme";
+            panelTheme.Padding = new Padding(10);
+            panelTheme.Size = new Size(800, 47);
+            panelTheme.TabIndex = 1;
             // 
-            // button2
+            // labelTheme
             // 
-            button2.Location = new Point(334, 12);
-            button2.Name = "button2";
-            button2.Size = new Size(194, 23);
-            button2.TabIndex = 1;
-            button2.Text = "Отметить как непрочитанное";
-            button2.UseVisualStyleBackColor = true;
+            labelTheme.Dock = DockStyle.Fill;
+            labelTheme.Font = new Font("Arial", 18F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            labelTheme.Location = new Point(10, 10);
+            labelTheme.Name = "labelTheme";
+            labelTheme.Size = new Size(778, 25);
+            labelTheme.TabIndex = 0;
+            labelTheme.Text = "Тема письма";
+            labelTheme.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // button3
+            // panelUser
             // 
-            button3.Location = new Point(93, 12);
-            button3.Name = "button3";
-            button3.Size = new Size(75, 23);
-            button3.TabIndex = 2;
-            button3.Text = "Ответить";
-            button3.UseVisualStyleBackColor = true;
+            panelUser.BorderStyle = BorderStyle.FixedSingle;
+            panelUser.Dock = DockStyle.Top;
+            panelUser.Location = new Point(0, 94);
+            panelUser.Name = "panelUser";
+            panelUser.Size = new Size(800, 50);
+            panelUser.TabIndex = 2;
             // 
-            // button4
+            // panelMessage
             // 
-            button4.Location = new Point(174, 12);
-            button4.Name = "button4";
-            button4.Size = new Size(154, 23);
-            button4.TabIndex = 3;
-            button4.Text = "Отметить как избранное";
-            button4.UseVisualStyleBackColor = true;
+            panelMessage.BorderStyle = BorderStyle.FixedSingle;
+            panelMessage.Controls.Add(textBoxMessage);
+            panelMessage.Dock = DockStyle.Fill;
+            panelMessage.Location = new Point(0, 144);
+            panelMessage.Name = "panelMessage";
+            panelMessage.Padding = new Padding(10);
+            panelMessage.Size = new Size(800, 306);
+            panelMessage.TabIndex = 3;
+            // 
+            // textBoxMessage
+            // 
+            textBoxMessage.BorderStyle = BorderStyle.None;
+            textBoxMessage.Dock = DockStyle.Fill;
+            textBoxMessage.Location = new Point(10, 10);
+            textBoxMessage.Multiline = true;
+            textBoxMessage.Name = "textBoxMessage";
+            textBoxMessage.Size = new Size(778, 284);
+            textBoxMessage.TabIndex = 0;
             // 
             // FormReadLetter
             // 
@@ -118,25 +145,29 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(800, 450);
-            Controls.Add(panel4);
-            Controls.Add(panel3);
-            Controls.Add(panel2);
-            Controls.Add(panel1);
+            Controls.Add(panelMessage);
+            Controls.Add(panelUser);
+            Controls.Add(panelTheme);
+            Controls.Add(panelAction);
             Name = "FormReadLetter";
             Text = "FormReadLetter";
-            panel1.ResumeLayout(false);
+            panelAction.ResumeLayout(false);
+            panelTheme.ResumeLayout(false);
+            panelMessage.ResumeLayout(false);
+            panelMessage.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private Panel panel1;
-        private Panel panel2;
-        private Panel panel3;
-        private Panel panel4;
-        private Button button4;
-        private Button button3;
-        private Button button2;
-        private Button button1;
+        private Panel panelAction;
+        private Panel panelTheme;
+        private Panel panelUser;
+        private Panel panelMessage;
+        private Button buttonResponce;
+        private Button buttonMarkUnread;
+        private Button buttonDelete;
+        private Label labelTheme;
+        private TextBox textBoxMessage;
     }
 }
