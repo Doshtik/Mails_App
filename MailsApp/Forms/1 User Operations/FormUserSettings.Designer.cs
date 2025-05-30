@@ -57,15 +57,15 @@
             panelInfo.Location = new Point(15, 15);
             panelInfo.Name = "panelInfo";
             panelInfo.Padding = new Padding(10);
-            panelInfo.Size = new Size(503, 153);
+            panelInfo.Size = new Size(499, 149);
             panelInfo.TabIndex = 0;
             // 
             // buttonSaveChanges
             // 
             buttonSaveChanges.Dock = DockStyle.Bottom;
-            buttonSaveChanges.Location = new Point(10, 120);
+            buttonSaveChanges.Location = new Point(10, 116);
             buttonSaveChanges.Name = "buttonSaveChanges";
-            buttonSaveChanges.Size = new Size(483, 23);
+            buttonSaveChanges.Size = new Size(479, 23);
             buttonSaveChanges.TabIndex = 8;
             buttonSaveChanges.Text = "Сохранить";
             buttonSaveChanges.UseVisualStyleBackColor = true;
@@ -152,6 +152,7 @@
             BackColor = Color.White;
             ClientSize = new Size(533, 183);
             Controls.Add(panelInfo);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximumSize = new Size(549, 222);
             MinimumSize = new Size(455, 222);
             Name = "FormUserSettings";

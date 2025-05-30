@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MailsApp.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -23,25 +24,26 @@ namespace MailsApp.Forms._3_Letters_Operations
             labelTime.Text = time.ToString();
         }
 
-        public void LetterItem_SizeChanged(object sender, EventArgs e)
-        {
-            if (this.Width <= 500)
-            {
-                return;
-            }
-            
-            labelMessage.Width = this.Width - checkBoxSelected.Width - checkBoxFavorite.Width - labelTheme.Width - labelTime.Width;
-        }
-
         private void LabelTheme_Click(object sender, EventArgs e)
         {
-            LabelMessage_Click(sender, e);
+            FormReadLetter form = new FormReadLetter(Id);
+            form.ShowDialog();
         }
 
         private void LabelMessage_Click(object sender, EventArgs e)
         {
             FormReadLetter form = new FormReadLetter(Id);
             form.ShowDialog();
+        }
+
+        private void checkBoxFavorite_CheckedChanged(object sender, EventArgs e)
+        {
+            using (MailsAppContext db = new MailsAppContext())
+            {
+                Letter letter = db.Letters.First(l => l.Id == Id);
+                letter.IsFavorite = checkBoxFavorite.Checked;
+                db.SaveChanges();
+            }
         }
     }
 }

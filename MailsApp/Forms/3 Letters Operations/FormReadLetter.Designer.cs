@@ -149,6 +149,7 @@
             Controls.Add(panelUser);
             Controls.Add(panelTheme);
             Controls.Add(panelAction);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "FormReadLetter";
             Text = "FormReadLetter";
             panelAction.ResumeLayout(false);

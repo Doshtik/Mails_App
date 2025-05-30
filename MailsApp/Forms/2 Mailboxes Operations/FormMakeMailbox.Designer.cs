@@ -83,6 +83,7 @@
             ClientSize = new Size(800, 450);
             Controls.Add(labelMakeMailbox);
             Controls.Add(panel1);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "FormMakeMailbox";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "FormMakeMailbox";

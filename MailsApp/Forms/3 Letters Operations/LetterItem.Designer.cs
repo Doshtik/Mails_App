@@ -30,30 +30,20 @@ namespace MailsApp.Forms._3_Letters_Operations
         /// </summary>
         private void InitializeComponent()
         {
-            checkBoxSelected = new CheckBox();
             labelTheme = new Label();
             labelMessage = new Label();
             labelTime = new Label();
             checkBoxFavorite = new CheckBox();
             SuspendLayout();
             // 
-            // checkBoxSelected
-            // 
-            checkBoxSelected.CheckAlign = ContentAlignment.MiddleCenter;
-            checkBoxSelected.Location = new Point(0, 0);
-            checkBoxSelected.Name = "checkBoxSelected";
-            checkBoxSelected.Size = new Size(34, 40);
-            checkBoxSelected.TabIndex = 0;
-            checkBoxSelected.UseVisualStyleBackColor = true;
-            // 
             // labelTheme
             // 
             labelTheme.BorderStyle = BorderStyle.FixedSingle;
             labelTheme.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            labelTheme.Location = new Point(79, 0);
+            labelTheme.Location = new Point(46, 0);
             labelTheme.Margin = new Padding(0);
             labelTheme.Name = "labelTheme";
-            labelTheme.Size = new Size(126, 40);
+            labelTheme.Size = new Size(159, 40);
             labelTheme.TabIndex = 1;
             labelTheme.Text = "Тема сообщения";
             labelTheme.TextAlign = ContentAlignment.MiddleLeft;
@@ -85,11 +75,12 @@ namespace MailsApp.Forms._3_Letters_Operations
             // checkBoxFavorite
             // 
             checkBoxFavorite.CheckAlign = ContentAlignment.MiddleCenter;
-            checkBoxFavorite.Location = new Point(40, 0);
+            checkBoxFavorite.Location = new Point(0, 0);
             checkBoxFavorite.Name = "checkBoxFavorite";
-            checkBoxFavorite.Size = new Size(36, 40);
+            checkBoxFavorite.Size = new Size(43, 40);
             checkBoxFavorite.TabIndex = 6;
             checkBoxFavorite.UseVisualStyleBackColor = true;
+            checkBoxFavorite.CheckedChanged += checkBoxFavorite_CheckedChanged;
             // 
             // LetterItem
             // 
@@ -101,7 +92,6 @@ namespace MailsApp.Forms._3_Letters_Operations
             Controls.Add(labelTime);
             Controls.Add(labelMessage);
             Controls.Add(labelTheme);
-            Controls.Add(checkBoxSelected);
             Margin = new Padding(0);
             Name = "LetterItem";
             Size = new Size(578, 40);
@@ -109,8 +99,6 @@ namespace MailsApp.Forms._3_Letters_Operations
         }
 
         #endregion
-
-        private CheckBox checkBoxSelected;
         private Label labelTheme;
         private Label labelMessage;
         private Label labelTime;

@@ -134,6 +134,7 @@ namespace MailsApp.Forms
             Controls.Add(linkRegistration);
             Controls.Add(panelAuthorization);
             Font = new Font("Calibri", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Margin = new Padding(4, 5, 4, 5);
             Name = "FormAuthorization";
             StartPosition = FormStartPosition.CenterScreen;

@@ -48,13 +48,16 @@ namespace MailsApp.Forms
             labelIncoming = new Label();
             labelAllMails = new Label();
             buttonMakeLetter = new Button();
-            panelActions = new Panel();
             panelLabels = new Panel();
+            buttonLabelWork = new Button();
+            buttonLabelNotification = new Button();
+            buttonLabelPromo = new Button();
             panelMessages = new Panel();
             panelTop.SuspendLayout();
             panelUser.SuspendLayout();
             contextMenuStrip1.SuspendLayout();
             panelSidebar.SuspendLayout();
+            panelLabels.SuspendLayout();
             SuspendLayout();
             // 
             // panelTop
@@ -240,25 +243,49 @@ namespace MailsApp.Forms
             buttonMakeLetter.UseVisualStyleBackColor = true;
             buttonMakeLetter.Click += buttonMakeLetter_Click;
             // 
-            // panelActions
-            // 
-            panelActions.BackColor = Color.White;
-            panelActions.BorderStyle = BorderStyle.FixedSingle;
-            panelActions.Dock = DockStyle.Top;
-            panelActions.Location = new Point(200, 60);
-            panelActions.Name = "panelActions";
-            panelActions.Size = new Size(600, 49);
-            panelActions.TabIndex = 2;
-            // 
             // panelLabels
             // 
             panelLabels.BackColor = Color.White;
             panelLabels.BorderStyle = BorderStyle.FixedSingle;
+            panelLabels.Controls.Add(buttonLabelWork);
+            panelLabels.Controls.Add(buttonLabelNotification);
+            panelLabels.Controls.Add(buttonLabelPromo);
             panelLabels.Dock = DockStyle.Top;
-            panelLabels.Location = new Point(200, 109);
+            panelLabels.Location = new Point(200, 60);
             panelLabels.Name = "panelLabels";
+            panelLabels.Padding = new Padding(10);
             panelLabels.Size = new Size(600, 49);
             panelLabels.TabIndex = 3;
+            // 
+            // buttonLabelWork
+            // 
+            buttonLabelWork.Dock = DockStyle.Left;
+            buttonLabelWork.Location = new Point(210, 10);
+            buttonLabelWork.Name = "buttonLabelWork";
+            buttonLabelWork.Size = new Size(100, 27);
+            buttonLabelWork.TabIndex = 2;
+            buttonLabelWork.Text = "Рабочие";
+            buttonLabelWork.UseVisualStyleBackColor = true;
+            // 
+            // buttonLabelNotification
+            // 
+            buttonLabelNotification.Dock = DockStyle.Left;
+            buttonLabelNotification.Location = new Point(110, 10);
+            buttonLabelNotification.Name = "buttonLabelNotification";
+            buttonLabelNotification.Size = new Size(100, 27);
+            buttonLabelNotification.TabIndex = 1;
+            buttonLabelNotification.Text = "Оповещения";
+            buttonLabelNotification.UseVisualStyleBackColor = true;
+            // 
+            // buttonLabelPromo
+            // 
+            buttonLabelPromo.Dock = DockStyle.Left;
+            buttonLabelPromo.Location = new Point(10, 10);
+            buttonLabelPromo.Name = "buttonLabelPromo";
+            buttonLabelPromo.Size = new Size(100, 27);
+            buttonLabelPromo.TabIndex = 0;
+            buttonLabelPromo.Text = "Промоакции";
+            buttonLabelPromo.UseVisualStyleBackColor = true;
             // 
             // panelMessages
             // 
@@ -266,10 +293,10 @@ namespace MailsApp.Forms
             panelMessages.BackColor = Color.White;
             panelMessages.BorderStyle = BorderStyle.FixedSingle;
             panelMessages.Dock = DockStyle.Fill;
-            panelMessages.Location = new Point(200, 158);
+            panelMessages.Location = new Point(200, 109);
             panelMessages.Name = "panelMessages";
             panelMessages.Padding = new Padding(5);
-            panelMessages.Size = new Size(600, 292);
+            panelMessages.Size = new Size(600, 341);
             panelMessages.TabIndex = 4;
             // 
             // FormLetters
@@ -279,18 +306,18 @@ namespace MailsApp.Forms
             ClientSize = new Size(800, 450);
             Controls.Add(panelMessages);
             Controls.Add(panelLabels);
-            Controls.Add(panelActions);
             Controls.Add(panelSidebar);
             Controls.Add(panelTop);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "FormLetters";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "MailsApp | Письма";
-            SizeChanged += FormLetters_SizeChanged;
             panelTop.ResumeLayout(false);
             panelTop.PerformLayout();
             panelUser.ResumeLayout(false);
             contextMenuStrip1.ResumeLayout(false);
             panelSidebar.ResumeLayout(false);
+            panelLabels.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -298,7 +325,6 @@ namespace MailsApp.Forms
 
         private Panel panelTop;
         private Panel panelSidebar;
-        private Panel panelActions;
         private Panel panelLabels;
         private Panel panelMessages;
         private Button buttonMakeLetter;
@@ -316,5 +342,8 @@ namespace MailsApp.Forms
         private ToolStripMenuItem сменитьПочтовыйЯщикToolStripMenuItem;
         private ToolStripMenuItem выйтиИзАккаунтаToolStripMenuItem;
         private Label labelUser;
+        private Button buttonLabelPromo;
+        private Button buttonLabelWork;
+        private Button buttonLabelNotification;
     }
 }

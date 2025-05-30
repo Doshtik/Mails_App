@@ -83,6 +83,7 @@
             ClientSize = new Size(549, 451);
             Controls.Add(panelItems);
             Controls.Add(panelActions);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             MinimumSize = new Size(565, 300);
             Name = "FormMailboxes";
             StartPosition = FormStartPosition.CenterScreen;

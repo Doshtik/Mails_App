@@ -118,6 +118,7 @@ namespace MailsApp.Forms
             ClientSize = new Size(1143, 690);
             Controls.Add(panel1);
             Font = new Font("Calibri", 14.25F);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Margin = new Padding(4, 5, 4, 5);
             Name = "FormRegistration";
             StartPosition = FormStartPosition.CenterScreen;

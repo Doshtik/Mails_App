@@ -32,6 +32,7 @@
             textBoxRecipient = new TextBox();
             buttonCopy = new Button();
             panelAction = new Panel();
+            flowPanelAttachments = new FlowLayoutPanel();
             buttonAttach = new Button();
             buttonSend = new Button();
             panelTheme = new Panel();
@@ -39,7 +40,6 @@
             panelMassage = new Panel();
             textBoxMassage = new TextBox();
             openFileDialog1 = new OpenFileDialog();
-            flowPanelAttachments = new FlowLayoutPanel();
             panelRecipient.SuspendLayout();
             panelAction.SuspendLayout();
             panelTheme.SuspendLayout();
@@ -88,6 +88,14 @@
             panelAction.Name = "panelAction";
             panelAction.Size = new Size(800, 50);
             panelAction.TabIndex = 1;
+            // 
+            // flowPanelAttachments
+            // 
+            flowPanelAttachments.Location = new Point(232, 5);
+            flowPanelAttachments.Name = "flowPanelAttachments";
+            flowPanelAttachments.Size = new Size(555, 40);
+            flowPanelAttachments.TabIndex = 2;
+            flowPanelAttachments.WrapContents = false;
             // 
             // buttonAttach
             // 
@@ -154,14 +162,6 @@
             openFileDialog1.FileName = "openFileDialog1";
             openFileDialog1.Multiselect = true;
             // 
-            // flowPanelAttachments
-            // 
-            flowPanelAttachments.Location = new Point(232, 5);
-            flowPanelAttachments.Name = "flowPanelAttachments";
-            flowPanelAttachments.Size = new Size(555, 40);
-            flowPanelAttachments.TabIndex = 2;
-            flowPanelAttachments.WrapContents = false;
-            // 
             // FormMakeLetter
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -172,6 +172,7 @@
             Controls.Add(panelTheme);
             Controls.Add(panelAction);
             Controls.Add(panelRecipient);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "FormMakeLetter";
             Text = "FormMakeLetter";
             panelRecipient.ResumeLayout(false);
