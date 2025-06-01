@@ -15,7 +15,7 @@ public partial class Letter
 
     public int IdMailboxSender { get; set; }
 
-    public int IdMailboxRecipient { get; set; }
+    public int? IdMailboxRecipient { get; set; }
 
     public string? Theme { get; set; }
 

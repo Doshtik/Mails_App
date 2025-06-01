@@ -34,7 +34,7 @@
             // 
             // buttonDeleteAttach
             // 
-            buttonDeleteAttach.Location = new Point(94, 8);
+            buttonDeleteAttach.Location = new Point(94, 3);
             buttonDeleteAttach.Name = "buttonDeleteAttach";
             buttonDeleteAttach.Size = new Size(25, 25);
             buttonDeleteAttach.TabIndex = 0;
@@ -45,7 +45,8 @@
             // labelFileName
             // 
             labelFileName.BackColor = Color.Transparent;
-            labelFileName.Location = new Point(3, 6);
+            labelFileName.ForeColor = Color.Black;
+            labelFileName.Location = new Point(3, 3);
             labelFileName.Name = "labelFileName";
             labelFileName.Size = new Size(85, 25);
             labelFileName.TabIndex = 1;
@@ -60,7 +61,7 @@
             Controls.Add(labelFileName);
             Controls.Add(buttonDeleteAttach);
             Name = "AttachmentItem";
-            Size = new Size(118, 38);
+            Size = new Size(118, 35);
             ResumeLayout(false);
         }
 

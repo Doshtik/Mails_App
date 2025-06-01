@@ -1,5 +1,7 @@
 ﻿using MailsApp.Forms._3_Letters_Operations;
 using MailsApp.Models;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
 
 namespace MailsApp.Forms
 {
@@ -10,9 +12,14 @@ namespace MailsApp.Forms
         private string _attachmentsDir;
         private int? _idLetterResponce;
 
+        private const string _draftStatusName = "draft";
+        private const string _sentStatusName = "sent";
+
         //Глобальная переменная для хранения позиции Y для копий письма
         private int _y;
         private List<TextBox> listRecipientCopy;
+
+        private bool _saveToDrafts = true;
 
         public FormMakeLetter(int idMailboxSender)
         {
@@ -29,7 +36,19 @@ namespace MailsApp.Forms
             _idMailboxSender = idMailboxSender;
             listRecipientCopy = new List<TextBox>();
             _idLetterResponce = idLetterResponce;
+            using (MailsAppContext db = new MailsAppContext())
+            {
+                Letter letter = db.Letters.First(l => l.Id == idLetterResponce);
+                textBoxRecipient.Text = db.Mailboxes.First(mb => mb.Id == letter.IdMailboxSender).MailName;
+                textBoxRecipient.ReadOnly = true;
+            }
             this.Text = "Новое сообщение | Ответ другое сообщение";
+        }
+        public FormMakeLetter(int idMailboxSender, Letter letter)
+        {
+            InitializeComponent();
+            _idMailboxSender = idMailboxSender;
+            
         }
 
         protected override void OnLoad(EventArgs e)
@@ -40,11 +59,63 @@ namespace MailsApp.Forms
             string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             _attachmentsDir = Path.Combine(appDataPath, "MailsApp", "Attachments");
 
+            using (MailsAppContext db = new MailsAppContext())
+            {
+                List<MailLabel> labels = db.MailLabels
+                    .OrderBy(l => l.Id)
+                    .ToList();
+
+                comboBoxLabels.DisplayMember = "LabelName";
+                comboBoxLabels.ValueMember = "Id";
+                comboBoxLabels.DataSource = labels;
+
+                comboBoxLabels.SelectedIndex = -1;             
+            }
+
             if (!Directory.Exists(_attachmentsDir))
             {
                 Directory.CreateDirectory(_attachmentsDir);
             }
             base.OnLoad(e);
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            if (!_saveToDrafts)
+                return;
+
+            DialogResult dr = MessageBox.Show("Вы хотите сохранить сообщение в черновик?", 
+                "", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (dr == DialogResult.Yes)
+            {
+                using (MailsAppContext db = new MailsAppContext())
+                {
+                    int draftStatusId = db.Statuses.First(s => s.StatusName == _draftStatusName).Id;
+                    MailLabel selectedLabel = comboBoxLabels.SelectedItem as MailLabel;
+                    int? idLabel = selectedLabel?.Id;
+
+                    Letter letterSender = new Letter()
+                    {
+                        IdStatus = draftStatusId,
+                        IdMailboxSender = _idMailboxSender,
+                        IdCopyRecipient = _idMailboxSender,
+                        Theme = textBoxTheme.Text.Trim(),
+                        Message = textBoxTheme.Text.Trim(),
+                        Date = DateTime.Now,
+                        IdLabel = idLabel,
+                        IsFavorite = false,
+                        IsRead = false,
+                    };
+
+                    Mailbox? mailboxRecipient = db.Mailboxes.FirstOrDefault(mb => mb.MailName == textBoxRecipient.Text.Trim());
+                    if (mailboxRecipient != null) 
+                        letterSender.IdMailboxRecipient = mailboxRecipient.Id;
+                    else 
+                        letterSender.IdMailboxRecipient = null;
+                    db.SaveChanges();
+                }
+            }
+            base.OnClosed(e);
         }
 
         private void buttonCopy_Click(object sender, EventArgs e)
@@ -114,7 +185,7 @@ namespace MailsApp.Forms
         private void buttonSend_Click(object sender, EventArgs e)
         {
             //Проверяем поле на null
-            if (textBoxRecipient.Text == null)
+            if (textBoxRecipient.Text == String.Empty)
             {
                 MessageBox.Show("Получатель не указан", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -132,7 +203,7 @@ namespace MailsApp.Forms
 
                 //Получаем список получателей, указанных в копии
                 List<Mailbox> mailboxesRecipientCopy = new List<Mailbox>();
-                if (listRecipientCopy != null)
+                if (listRecipientCopy.Count != 0)
                 {
                     foreach (TextBox tb in listRecipientCopy)
                     {
@@ -144,7 +215,8 @@ namespace MailsApp.Forms
                             "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return;
                         }
-                        MessageBox.Show($"{mb.MailName} - найден");
+                        MessageBox.Show($"{mb.MailName} - найден", "Информация", 
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
                         mailboxesRecipientCopy.Add(mb);
                     }
                 }
@@ -153,24 +225,32 @@ namespace MailsApp.Forms
                 if (textBoxMassage.Text == String.Empty && textBoxTheme.Text == String.Empty)
                 {
                     if (MessageBox.Show("Вы действительно хотите отправить сообщение без темы и сообщения?",
-                    "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                        "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                     {
                         return;
                     }
                 }
 
-                int idSended = db.Statuses.First(s => s.StatusName.Equals("sent")).Id;
+                int idSended = db.Statuses.First(s => s.StatusName.Equals(_sentStatusName)).Id;
+                MailLabel selectedLabel = comboBoxLabels.SelectedItem as MailLabel;
+                int? idLabel = selectedLabel?.Id;
 
                 //Создаем письма
                 Letter letterSender = new Letter(idSended, _idMailboxSender, mailboxRecipient.Id,
                     _idMailboxSender, textBoxMassage.Text, DateTime.UtcNow, textBoxTheme.Text, _idLetterResponce);
+                letterSender.IdLabel = idLabel;
+                db.Letters.Add(letterSender);
 
-                Letter letterRecipient = new Letter(idSended, _idMailboxSender, mailboxRecipient.Id,
-                    mailboxRecipient.Id, textBoxMassage.Text, DateTime.UtcNow, textBoxTheme.Text, _idLetterResponce);
+                Letter letterRecipient = new Letter();
+                if (_idMailboxSender != mailboxRecipient.Id)
+                {
+                    letterRecipient = new Letter(idSended, _idMailboxSender, mailboxRecipient.Id,
+                        mailboxRecipient.Id, textBoxMassage.Text, DateTime.UtcNow, textBoxTheme.Text, _idLetterResponce);
+                    letterRecipient.IdLabel = idLabel;
+                    db.Letters.Add(letterRecipient);
+                }
 
                 //Добавляем письма в БД
-                db.Letters.Add(letterSender);
-                db.Letters.Add(letterRecipient);
                 db.SaveChanges();
 
                 //Проверяем наличие вложений
@@ -191,16 +271,19 @@ namespace MailsApp.Forms
                                 IdLetter = letterSender.Id,
                                 FileName = fileName
                             };
+                            db.Attachments.Add(attachSender);
 
-                            Attachment attachRecipient = new Attachment()
+                            if (_idMailboxSender != mailboxRecipient.Id)
                             {
-                                IdLetter = letterRecipient.Id,
-                                FileName = fileName
-                            };
+                                Attachment attachRecipient = new Attachment()
+                                {
+                                    IdLetter = letterRecipient.Id,
+                                    FileName = fileName
+                                };
+                                db.Attachments.Add(attachRecipient);
+                            }
 
                             //Добавляем записи вложений в БД
-                            db.Attachments.Add(attachSender);
-                            db.Attachments.Add(attachRecipient);
                             db.SaveChanges();
                         }
                     }
@@ -210,32 +293,36 @@ namespace MailsApp.Forms
                 {
                     Letter letterRecipientCopy = new Letter(idSended, _idMailboxSender, mailboxRecipient.Id,
                     mailboxRecipientCopy.Id, textBoxMassage.Text, DateTime.UtcNow, textBoxTheme.Text, _idLetterResponce);
+                    letterRecipientCopy.IdLabel = idLabel;
 
                     db.Letters.Add(letterRecipientCopy);
                     db.SaveChanges();
 
-                    if (_filePathes != null)
+                    if (_filePathes == null)
+                        break;
+
+                    foreach (string file in _filePathes)
                     {
-                        foreach (string file in _filePathes)
+                        if (file == null)
+                            continue;
+
+                        string fileName = Path.GetFileName(file);
+                        if (_idMailboxSender != mailboxRecipient.Id)
                         {
-                            if (file != null)
+                            Attachment attachRecipientCopy = new Attachment()
                             {
-                                string fileName = Path.GetFileName(file);
+                                IdLetter = letterRecipientCopy.Id,
+                                FileName = fileName
+                            };
 
-                                Attachment attachRecipientCopy = new Attachment()
-                                {
-                                    IdLetter = letterRecipientCopy.Id,
-                                    FileName = fileName
-                                };
-
-                                db.Attachments.Add(attachRecipientCopy);
-                                db.SaveChanges();
-                            }
+                            db.Attachments.Add(attachRecipientCopy);
+                            db.SaveChanges();
                         }
                     }
                 }
                 MessageBox.Show("Письмо успешно отправлено",
                 "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                _saveToDrafts = false;
                 this.Close();
             }
 
@@ -250,7 +337,7 @@ namespace MailsApp.Forms
             }
             catch
             {
-                fileName = Path.GetFileNameWithoutExtension(file);
+                fileName = Path.GetFileNameWithoutExtension(fileName);
                 string ext = Path.GetExtension(file);
                 fileName = fileName + "_copy" + ext;
 

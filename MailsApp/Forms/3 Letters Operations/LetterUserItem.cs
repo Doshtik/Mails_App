@@ -14,6 +14,7 @@ namespace MailsApp.Forms._3_Letters_Operations
     public partial class LetterUserItem : UserControl
     {
         private int _letterId;
+        private Letter _letter;
         public LetterUserItem(int letterId)
         {
             InitializeComponent();
@@ -36,6 +37,16 @@ namespace MailsApp.Forms._3_Letters_Operations
                 labelSenderMailbox.Text = $"<{mailboxSender.MailName}>";
                 labelRecipientMailbox.Text = $"Кому: <{mailboxRecipiemt.MailName}>";
                 labelDateTime.Text = letter.Date.ToString();
+            }
+        }
+
+        private void checkBoxIsFavorite_CheckedChanged(object sender, EventArgs e)
+        {
+            using (MailsAppContext db = new MailsAppContext())
+            {
+                Letter letter = db.Letters.First(l => l.Id == _letterId);
+                letter.IsFavorite = checkBoxIsFavorite.Checked;
+                db.SaveChanges();
             }
         }
     }

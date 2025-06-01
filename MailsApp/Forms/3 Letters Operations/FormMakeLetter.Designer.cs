@@ -36,6 +36,7 @@
             buttonAttach = new Button();
             buttonSend = new Button();
             panelTheme = new Panel();
+            comboBoxLabels = new ComboBox();
             textBoxTheme = new TextBox();
             panelMassage = new Panel();
             textBoxMassage = new TextBox();
@@ -121,12 +122,21 @@
             // 
             panelTheme.BackColor = Color.White;
             panelTheme.BorderStyle = BorderStyle.FixedSingle;
+            panelTheme.Controls.Add(comboBoxLabels);
             panelTheme.Controls.Add(textBoxTheme);
             panelTheme.Dock = DockStyle.Top;
             panelTheme.Location = new Point(0, 50);
             panelTheme.Name = "panelTheme";
             panelTheme.Size = new Size(800, 50);
             panelTheme.TabIndex = 2;
+            // 
+            // comboBoxLabels
+            // 
+            comboBoxLabels.FormattingEnabled = true;
+            comboBoxLabels.Location = new Point(597, 14);
+            comboBoxLabels.Name = "comboBoxLabels";
+            comboBoxLabels.Size = new Size(190, 23);
+            comboBoxLabels.TabIndex = 5;
             // 
             // textBoxTheme
             // 
@@ -174,6 +184,7 @@
             Controls.Add(panelRecipient);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "FormMakeLetter";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "FormMakeLetter";
             panelRecipient.ResumeLayout(false);
             panelRecipient.PerformLayout();
@@ -199,5 +210,6 @@
         private TextBox textBoxTheme;
         private OpenFileDialog openFileDialog1;
         private FlowLayoutPanel flowPanelAttachments;
+        private ComboBox comboBoxLabels;
     }
 }

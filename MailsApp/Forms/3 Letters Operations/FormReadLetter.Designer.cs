@@ -30,13 +30,13 @@
         {
             panelAction = new Panel();
             buttonResponce = new Button();
-            buttonMarkUnread = new Button();
             buttonDelete = new Button();
             panelTheme = new Panel();
             labelTheme = new Label();
             panelUser = new Panel();
             panelMessage = new Panel();
             textBoxMessage = new TextBox();
+            flowPanelAttachments = new FlowLayoutPanel();
             panelAction.SuspendLayout();
             panelTheme.SuspendLayout();
             panelMessage.SuspendLayout();
@@ -46,8 +46,8 @@
             // 
             panelAction.BackColor = Color.White;
             panelAction.BorderStyle = BorderStyle.FixedSingle;
+            panelAction.Controls.Add(flowPanelAttachments);
             panelAction.Controls.Add(buttonResponce);
-            panelAction.Controls.Add(buttonMarkUnread);
             panelAction.Controls.Add(buttonDelete);
             panelAction.Dock = DockStyle.Top;
             panelAction.Location = new Point(0, 0);
@@ -65,16 +65,6 @@
             buttonResponce.Text = "Ответить";
             buttonResponce.UseVisualStyleBackColor = true;
             buttonResponce.Click += buttonResponce_Click;
-            // 
-            // buttonMarkUnread
-            // 
-            buttonMarkUnread.Font = new Font("Arial", 9.75F);
-            buttonMarkUnread.Location = new Point(174, 12);
-            buttonMarkUnread.Name = "buttonMarkUnread";
-            buttonMarkUnread.Size = new Size(194, 23);
-            buttonMarkUnread.TabIndex = 1;
-            buttonMarkUnread.Text = "Отметить как непрочитанное";
-            buttonMarkUnread.UseVisualStyleBackColor = true;
             // 
             // buttonDelete
             // 
@@ -139,6 +129,14 @@
             textBoxMessage.Size = new Size(778, 284);
             textBoxMessage.TabIndex = 0;
             // 
+            // flowPanelAttachments
+            // 
+            flowPanelAttachments.Location = new Point(174, 3);
+            flowPanelAttachments.Name = "flowPanelAttachments";
+            flowPanelAttachments.Size = new Size(555, 40);
+            flowPanelAttachments.TabIndex = 3;
+            flowPanelAttachments.WrapContents = false;
+            // 
             // FormReadLetter
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -151,6 +149,7 @@
             Controls.Add(panelAction);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "FormReadLetter";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "FormReadLetter";
             panelAction.ResumeLayout(false);
             panelTheme.ResumeLayout(false);
@@ -166,9 +165,9 @@
         private Panel panelUser;
         private Panel panelMessage;
         private Button buttonResponce;
-        private Button buttonMarkUnread;
         private Button buttonDelete;
         private Label labelTheme;
         private TextBox textBoxMessage;
+        private FlowLayoutPanel flowPanelAttachments;
     }
 }

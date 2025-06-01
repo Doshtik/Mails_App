@@ -79,6 +79,9 @@ namespace MailsApp.Forms
                     Location = Location = new Point(10, 10 + itemCount),
                     Width = panelMessages.Width - 30
                 };
+                item.LetterChanged += (sender, e) => {
+                    RefreshList();
+                };
                 itemCount += 50;
 
                 panelMessages.Controls.Add(item);
@@ -102,10 +105,11 @@ namespace MailsApp.Forms
             using (MailsAppContext db = new MailsAppContext())
             {
                 Letter[] letters = db.Letters
-                        .Where(l => l.IdCopyRecipient == _mailbox.Id &&
-                            l.IdStatus != _idDeletedStatus &&
-                            l.IdLabel == labelId)
-                        .ToArray();
+                    .Where(l => l.IdCopyRecipient == _mailbox.Id &&
+                        l.IdStatus != _idDeletedStatus &&
+                        l.IdLabel == labelId)
+                    .OrderByDescending(l => l.Date)
+                    .ToArray();
                 DrawLetters(letters);
             }
         }
@@ -118,6 +122,7 @@ namespace MailsApp.Forms
                         l.IdCopyRecipient == _mailbox.Id &&
                         l.IdStatus != _idDeletedStatus &&
                         l.IdLabel == labelId)
+                    .OrderByDescending(l => l.Date)
                     .ToArray();
                 DrawLetters(letters);
             }
@@ -131,6 +136,7 @@ namespace MailsApp.Forms
                         l.IdCopyRecipient == _mailbox.Id &&
                         l.IdStatus != _idDeletedStatus &&
                         l.IdLabel == labelId)
+                    .OrderByDescending(l => l.Date)
                     .ToArray();
                 DrawLetters(letters);
             }
@@ -144,55 +150,14 @@ namespace MailsApp.Forms
                         l.IsFavorite == true &&
                         l.IdStatus != _idDeletedStatus &&
                         l.IdLabel == labelId)
+                    .OrderByDescending(l => l.Date)
                     .ToArray();
-                DrawLetters(letters);
-            }
-        }
-        private void HandleLabelClickGarbage(int labelId)
-        {
-            using (MailsAppContext db = new MailsAppContext())
-            {
-                Letter[] letters = db.Letters
-                        .Where(l => l.IdCopyRecipient == _mailbox.Id &&
-                            l.IdStatus != _idDeletedStatus &&
-                            l.IdLabel == labelId)
-                        .ToArray();
                 DrawLetters(letters);
             }
         }
         #endregion
 
         #region Кнопки panelSidebar
-        private void buttonMakeLetter_Click(object sender, EventArgs e)
-        {
-            FormMakeLetter form = new FormMakeLetter(_mailbox.Id);
-            form.ShowDialog();
-
-            switch (_selectedLabel.Name) //Обновляем информацию
-            {
-                case "LabelAllMails":
-                    LabelAllMails_Click(labelAllMails, EventArgs.Empty);
-                    break;
-                case "LabelIncoming":
-                    LabelIncoming_Click(labelIncoming, EventArgs.Empty);
-                    break;
-                case "LabelSended":
-                    LabelSended_Click(labelSended, EventArgs.Empty);
-                    break;
-                case "LabelFavorite":
-                    LabelFavorite_Click(labelFavorite, EventArgs.Empty);
-                    break;
-                case "LabelDraft":
-                    LabelDraft_Click(labelDraft, EventArgs.Empty);
-                    break;
-                case "LabelGarbage":
-                    LabelGarbage_Click(labelGarbage, EventArgs.Empty);
-                    break;
-                default:
-                    LabelIncoming_Click(labelIncoming, EventArgs.Empty);
-                    break;
-            }
-        }
         private void LabelAllMails_Click(object sender, EventArgs e)
         {
             panelLabels.Visible = true;
@@ -200,7 +165,9 @@ namespace MailsApp.Forms
             using (MailsAppContext db = new MailsAppContext())
             {
                 Letter[] letters = db.Letters
-                    .Where(l => l.IdCopyRecipient == _mailbox.Id && l.IdStatus != _idDeletedStatus)
+                    .Where(l => l.IdCopyRecipient == _mailbox.Id && 
+                        l.IdStatus != _idDeletedStatus)
+                    .OrderByDescending(l => l.Date)
                     .ToArray();
                 DrawLetters(letters);
 
@@ -230,6 +197,7 @@ namespace MailsApp.Forms
                     .Where(l => l.IdMailboxRecipient == _mailbox.Id && 
                         l.IdCopyRecipient == _mailbox.Id && 
                         l.IdStatus != _idDeletedStatus)
+                    .OrderByDescending(l => l.Date)
                     .ToArray();
                 DrawLetters(letters);
 
@@ -259,6 +227,7 @@ namespace MailsApp.Forms
                     .Where(l => l.IdMailboxSender == _mailbox.Id && 
                         l.IdCopyRecipient == _mailbox.Id && 
                         l.IdStatus != _idDeletedStatus)
+                    .OrderByDescending(l => l.Date)
                     .ToArray();
                 DrawLetters(letters);
 
@@ -288,6 +257,7 @@ namespace MailsApp.Forms
                     .Where(l => l.IdCopyRecipient == _mailbox.Id && 
                         l.IsFavorite == true && 
                         l.IdStatus != _idDeletedStatus)
+                    .OrderByDescending(l => l.Date)
                     .ToArray();
                 DrawLetters(letters);
 
@@ -317,6 +287,7 @@ namespace MailsApp.Forms
                 Letter[] letters = db.Letters
                     .Where(l => l.IdCopyRecipient == _mailbox.Id && 
                         l.IdStatus == statusId)
+                    .OrderByDescending(l => l.Date)
                     .ToArray();
                 DrawLetters(letters);
 
@@ -336,6 +307,7 @@ namespace MailsApp.Forms
                 Letter[] letters = db.Letters
                     .Where(l => l.IdCopyRecipient == _mailbox.Id && 
                         l.IdStatus == _idDeletedStatus)
+                    .OrderByDescending(l => l.Date)
                     .ToArray();
                 DrawLetters(letters);
 
@@ -355,7 +327,6 @@ namespace MailsApp.Forms
             form.ShowDialog();
             this.Close();
         }
-
         private void LeaveAccountToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FormAuthorization form = new FormAuthorization();
@@ -363,7 +334,6 @@ namespace MailsApp.Forms
             form.ShowDialog();
             this.Close();
         }
-
         private void ChangeUserSettingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FormUserSettings form = new FormUserSettings(_mailbox.IdUser);
@@ -389,8 +359,41 @@ namespace MailsApp.Forms
                 Letter[] letters = db.Letters
                     .Where(l => (EF.Functions.ILike(l.Theme, regPattern) && l.IdCopyRecipient == _mailbox.Id) ||
                                (EF.Functions.ILike(l.Message, regPattern) && l.IdCopyRecipient == _mailbox.Id))
+                    .OrderByDescending(l => l.Id)
                     .ToArray();
                 DrawLetters(letters);
+            }
+        }
+        private void buttonMakeLetter_Click(object sender, EventArgs e)
+        {
+            FormMakeLetter form = new FormMakeLetter(_mailbox.Id);
+            form.ShowDialog();
+        }
+        private void RefreshList()
+        {
+            switch (_selectedLabel.Name) //Обновляем информацию
+            {
+                case "LabelAllMails":
+                    LabelAllMails_Click(labelAllMails, EventArgs.Empty);
+                    break;
+                case "LabelIncoming":
+                    LabelIncoming_Click(labelIncoming, EventArgs.Empty);
+                    break;
+                case "LabelSended":
+                    LabelSended_Click(labelSended, EventArgs.Empty);
+                    break;
+                case "LabelFavorite":
+                    LabelFavorite_Click(labelFavorite, EventArgs.Empty);
+                    break;
+                case "LabelDraft":
+                    LabelDraft_Click(labelDraft, EventArgs.Empty);
+                    break;
+                case "LabelGarbage":
+                    LabelGarbage_Click(labelGarbage, EventArgs.Empty);
+                    break;
+                default:
+                    LabelIncoming_Click(labelIncoming, EventArgs.Empty);
+                    break;
             }
         }
     }

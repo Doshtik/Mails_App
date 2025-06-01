@@ -77,6 +77,7 @@
             checkBoxIsFavorite.TabIndex = 3;
             checkBoxIsFavorite.Text = "В избранное";
             checkBoxIsFavorite.UseVisualStyleBackColor = true;
+            checkBoxIsFavorite.CheckedChanged += checkBoxIsFavorite_CheckedChanged;
             // 
             // labelDateTime
             // 

@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using MailsApp.Models;
 
 namespace MailsApp.Forms._3_Letters_Operations
 {
@@ -22,6 +14,13 @@ namespace MailsApp.Forms._3_Letters_Operations
         {
             InitializeComponent();
             FileName = fileName;
+        }
+        public AttachmentItem(Attachment attachment)
+        {
+            InitializeComponent();
+            FileName = attachment.FileName;
+            buttonDeleteAttach.Visible = false;
+            labelFileName.Enabled = false;
         }
 
         private void ButtonDeleteAttach_Click(object sender, EventArgs e)
